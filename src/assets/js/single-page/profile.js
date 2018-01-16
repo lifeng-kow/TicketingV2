@@ -186,12 +186,11 @@ function updateIndBasic(PersonID){
   email = $('#email').val();
   address = $('#address').val();
 
-  if (IsValidEmail(email)==false){
-    alert('Invalid email!');
-    return false;
-  }
   if (IsValidContact(tel1)==false || IsValidContact(mobile)==false){
     alert('Invalid contact!');
+    return false;
+  }if (IsValidEmail(email)==false){
+    alert('Invalid email!');
     return false;
   }
 
@@ -230,12 +229,11 @@ function updateOrgBasic(PersonID){
   email = $('#email').val();
   address = $('#address').val();
 
-  if (IsValidEmail(email)==false){
-    alert('Invalid email!');
-    return false;
-  }
   if (IsValidContact(tel1)==false){
     alert('Invalid contact!');
+    return false;
+  }if (IsValidEmail(email)==false){
+    alert('Invalid email!');
     return false;
   }
 
@@ -280,12 +278,11 @@ function updateContactPoint(PersonID){
   poc2Designation = $('#poc2Designation').val();
   poc2Department = $('#poc2Department').val();
 
-  if (IsValidEmail(poc1Email)==false || IsValidEmail(poc2Email)==false){
-    alert('Invalid email!');
-    return false;
-  }
   if (IsValidContact(poc1Contact)==false || IsValidContact(poc2Contact)==false){
     alert('Invalid contact!');
+    return false;
+  }if (IsValidEmail(poc1Email)==false || IsValidEmail(poc2Email)==false){
+    alert('Invalid email!');
     return false;
   }
 
