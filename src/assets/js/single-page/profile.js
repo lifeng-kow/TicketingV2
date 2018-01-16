@@ -185,6 +185,16 @@ function updateIndBasic(PersonID){
   mobile = $('#mobile').val();
   email = $('#email').val();
   address = $('#address').val();
+
+  if (IsValidEmail(email)==false){
+    alert('Invalid email!');
+    return false;
+  }
+  if (IsValidContact(tel1)==false || IsValidContact(mobile)==false){
+    alert('Invalid contact!');
+    return false;
+  }
+
   var data = { "PID": PersonID, "name": name, "tel1": tel1, "mobile": mobile, "email": email, "address": address };
   $.ajax({
     url: apiSrc+"BCMain/iCtc1.UpdateIndBasic.json",
@@ -219,6 +229,16 @@ function updateOrgBasic(PersonID){
   tel1 = $('#tel1').val();
   email = $('#email').val();
   address = $('#address').val();
+
+  if (IsValidEmail(email)==false){
+    alert('Invalid email!');
+    return false;
+  }
+  if (IsValidContact(tel1)==false){
+    alert('Invalid contact!');
+    return false;
+  }
+
   var data = { "PID": PersonID, "name": name, "entityKey": entityKey, "tel1": tel1, "email": email, "address": address };
   $.ajax({
     url: apiSrc+"BCMain/iCtc1.UpdateOrgBasic.json",
@@ -259,6 +279,15 @@ function updateContactPoint(PersonID){
   poc2Email = $('#poc2Email').val();
   poc2Designation = $('#poc2Designation').val();
   poc2Department = $('#poc2Department').val();
+
+  if (IsValidEmail(poc1Email)==false || IsValidEmail(poc2Email)==false){
+    alert('Invalid email!');
+    return false;
+  }
+  if (IsValidContact(poc1Contact)==false || IsValidContact(poc2Contact)==false){
+    alert('Invalid contact!');
+    return false;
+  }
 
   var data = { "PID": PersonID, "poc1Name": poc1Name, "poc1Contact": poc1Contact, "poc1Email": poc1Email, "poc1Designation": poc1Designation, "poc1Department": poc1Department, "poc2Name": poc2Name, "poc2Contact": poc2Contact, "poc2Email": poc2Email, "poc2Designation": poc2Designation, "poc2Department": poc2Department };
   $.ajax({
@@ -382,3 +411,13 @@ function getGUID() {
 	});
 	return uuid;
 };
+
+function IsValidContact(contactno) {
+	var re = /^[6389]\d{7}$/;
+	return re.test(contactno);
+}
+
+function IsValidEmail(email) {
+	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(email);
+}
