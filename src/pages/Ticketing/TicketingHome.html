@@ -30,7 +30,6 @@
       <button type="button" class="buttonType2 buttonType2Add cell medium-3 text-right show-for-medium"  data-open="caseAddForm">Create Case</button>
    </header>
 
-
    <div id='caseFilter' class="caseFilter tabBoxContainer">
       <button class="button button3 tabBoxButton" data-target="caseFilterForm" ><i class="icon"><img src="{{root}}assets/img/icon-light-filter.png" alt="icon"/></i>Filter</button>
       <form class="form2 tabBoxContent reveal" id="caseFilterForm">
@@ -41,54 +40,18 @@
             <div class="cell">
                <label>Organization
                  <select id="organisation" name="organisation">
-                    <option value="">-- Please Select --</option>
                  </select>
-               </label>
-            </div>
-         </div>
-         <div class="grid-x grid-padding-x">
-            <div class="cell">
-               <label>
-                  System
-                  <select id="system" name="system">
-                     <option value="">-- Please Select --</option>
-                  </select>
-               </label>
-            </div>
-            <div class="cell">
-               <label>
-                  Module
-                  <select id="module" name="module">
-                     <option value="">-- Please Select --</option>
-                  </select>
                </label>
             </div>
          </div>
          <div class="grid-x grid-padding-x">
             <fieldset class="cell checkboxGroup">
                <legend>Status</legend>
-               <!--
-               <span>
-                 <input type="checkbox" id="statusNewCB" value="New" name="status" checked /><label for="statusNewCB">New</label>
-               </span>-->
-               <span>
-                 <input type="checkbox" id="statusNewCB" value="New" name="status" /><label for="statusNewCB">New</label>
-               </span>
-               <span>
-                 <input type="checkbox" id="statusReviewCB" value="Reviewed" name="status" /><label for="statusReviewCB">Reviewed</label>
-               </span>
-               <span>
-                 <input type="checkbox" id="statusProgressingCB" value="Progressing" name="status" /><label for="statusProgressingCB">Progressing</label>
-               </span>
-               <span>
-                 <input type="checkbox" id="statusClosedCB" value="Closed" name="status" /><label for="statusClosedCB">Closed</label>
-               </span>
-               <span>
-                 <input type="checkbox" id="statusCompletedCB" value="Completed" name="status" /><label for="statusCompletedCB">Completed</label>
-               </span>
-               <span>
-                 <input type="checkbox" id="statusMyCase" name="mycase" /><label class="mycase" for="statusMyCase">Show My Case ONLY</label>
-               </span>
+               <select id="status" name="status">
+                  <option value="">-- Please Select --</option>
+                  <option value="Open" selected>Open</option>
+                  <option value="Closed">Closed</option>
+               </select>
             </fieldset>
          </div>
          <div class="grid-x grid-padding-x">
@@ -97,13 +60,13 @@
                <div class="grid-x grid-margin-x">
                   <div class="cell medium-5">
                      <label>
-                     <input type="text" id="dateCreatedFrom" name="dateCreatedFrom" placeholder="Date From" class="datepicker"/>
+                     <input type="date" id="dateCreatedFrom" name="dateCreatedFrom" placeholder="Date From" />
                      </label>
                   </div>
                   <span class="cell auto text-center show-for-medium">-</span>
                   <div class="cell medium-5">
                      <label>
-                     <input type="text" id="dateCreatedTo" name="dateCreatedTo" placeholder="Date To" class="datepicker"/>
+                     <input type="date" id="dateCreatedTo" name="dateCreatedTo" placeholder="Date To" />
                      </label>
                   </div>
                </div>
@@ -113,19 +76,15 @@
             <button type="button" class="cell small-12 medium-offset-4 medium-4 button tabBoxButtonSubmit">Filter</button>
          </footer>
       </form>
-      <!-- form end -->
    </div>
-   <!-- filter end -->
+
    <div class="scrollContainer scrollY">
       <table class="caseTable">
          <thead>
             <tr>
-               <!--<th></th>-->
-               <th colspan="2"></th>
-               <th>Organization</th>
-               <th>System</th>
-               <th>Man-Day(s)</th>
-               <th>Module</th>
+               <th colspan="2">Title</th>
+               <th>Type</th>
+               <th>Organisation</th>
                <th>Created Date</th>
                <th>Status</th>
             </tr>
@@ -140,9 +99,8 @@
       <div class="legend">
          <h6>Legend</h6>
          <ul>
-            <li class="pending">Pending</li>
-            <li class="active">Active</li>
-            <li class="non-active">Non-Active</li>
+            <li class="active">Open</li>
+            <li class="non-active">Closed</li>
          </ul>
       </div>
    </footer>
@@ -158,17 +116,40 @@
    <div class="grid-x grid-padding-x">
       <div class="cell">
          <label>
-         Organisation
-         <select id="organisation" name="organisation">
-            <option value="">-- Please Select --</option>
-         </select>
+         Organisation<span style="color:red">*</span>
+           <select id="organisation" name="organisation">
+           </select>
          </label>
       </div>
    </div>
    <div class="grid-x grid-padding-x">
       <div class="cell">
          <label>
-         Title
+         Name<span style="color:red">*</span>
+         <input type="text" id="name" name="name"/>
+         </label>
+      </div>
+   </div>
+   <div class="grid-x grid-padding-x">
+      <div class="cell">
+         <label>
+         Email<span style="color:red">*</span>
+         <input type="text" id="email" name="email"/>
+         </label>
+      </div>
+   </div>
+   <div class="grid-x grid-padding-x">
+      <div class="cell">
+         <label>
+         Contact No.<span style="color:red">*</span>
+         <input type="text" id="contact" name="contact"/>
+         </label>
+      </div>
+   </div>
+   <div class="grid-x grid-padding-x">
+      <div class="cell">
+         <label>
+         Title<span style="color:red">*</span>
          <input type="text" id="title" name="title"/>
          </label>
       </div>
@@ -176,46 +157,20 @@
    <div class="grid-x grid-padding-x">
       <div class="cell">
          <label>
-            Product
-            <select id="product" name="product">
-               <option value="">-- Please Select --</option>
-            </select>
+          Request Type
+          <select id="category" name="category">
+             <option value="">-- Please Select --</option>
+             <option value="Bugs">Bugs</option>
+             <option value="CR">Change Request</option>
+          </select>
          </label>
       </div>
    </div>
    <div class="grid-x grid-padding-x">
       <div class="cell">
          <label>
-            System
-            <select id="system" name="system">
-               <option value="">-- Please Select --</option>
-            </select>
-         </label>
-      </div>
-   </div>
-   <div class="grid-x grid-padding-x">
-      <div class="cell">
-         <label>
-            Module
-            <select id="module" name="module">
-               <option value="">-- Please Select --</option>
-            </select>
-         </label>
-      </div>
-   </div>
-   <div class="grid-x grid-padding-x">
-      <div class="cell">
-         <label>
-         Description
+         Description<span style="color:red">*</span>
          <textarea id="description" name="description"></textarea>
-         </label>
-      </div>
-   </div>
-   <div class="grid-x grid-padding-x">
-      <div class="cell">
-         <label>
-         Carbon Copy <small>(For multiple emails, separate by |)</small>
-         <input type="text" id="cc" name="cc"/>
          </label>
       </div>
    </div>

@@ -8,11 +8,13 @@ $(function(){
   loginCallOut = loginComponent.find('.formCallout');
 
   appCookie = Cookies.getJSON('appCookie');
+  if (appCookie.loginID){
+    window.location.href = 'Ticketing/TicketingHome.html';
+  }
   checkRememberMe();
 
   $('#loginComponent').keyup(function(e){
     if(e.keyCode == 13){
-
         initLogin(apiSrc);
     }
   });
@@ -108,7 +110,7 @@ function getLoginInfo(callout) {
     Cookies.set('appCookie', appCookie);
 
     if (appCookie.loginID || !appCookie.redirectPage || appCookie.redirectPage==undefined){
-      window.location.href = 'index.html';
+      window.location.href = 'Ticketing/TicketingHome.html';
     }else{
       window.location.href = appCookie.redirectPage;
     }

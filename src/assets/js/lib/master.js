@@ -17,7 +17,7 @@ class Master {
     if (hostname.match(/localhost/)){
       window.appName = '';
       window.appRootPath = '/';
-      window.apiSrc = 'https://portal.taksys.com.sg/Support/';
+      window.apiSrc = 'https://portal.taksys.com.sg/BCSupport/';
     }
     else {
       if (href.length >= 3) {

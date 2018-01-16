@@ -21,7 +21,8 @@ $(function(){
 
   window.Master = new Master();
   //get page name
-  //pageName = getPageName();
+  pageName = $('body').attr('id').replace('page-','');
+
   guid = getGUID();
 
   igwasCookie = Cookies.getJSON('IGWAS');
@@ -51,6 +52,7 @@ $(function(){
     window.location.href = appRootPath +'login.html';
   }
 
+  checkAccess();
   if(appCookie.loginID){
     GetBasicInformation(appCookie.personID);
   }
@@ -93,6 +95,7 @@ $(function(){
         }).removeClass('tabBoxButtonOpen');
     return false;
   });
+
   $('.tabBoxButton').click(function(){
     var targetRef = $(this).data('target');
     if (  $('#'+targetRef).is(':visible')){
@@ -179,6 +182,34 @@ $(function(){
   });
 });//onready
 
+function checkAccess(){
+  var data = {};
+  $.ajax({
+    url: apiSrc+"BCMain/iCtc1.CheckIsAdmin.json",
+    method: "POST",
+    dataType: "json",
+    xhrFields: {withCredentials: true},
+    data: { 'data':JSON.stringify(data),
+            'WebPartKey':'021cb7cca70748ff89795e3ad544d5eb',
+            'ReqGUID': 'b4bbedbf-e591-4b7a-ad20-101f8f656277' },
+    success: function(data){
+      if ((data) && (data.d.RetVal === -1)) {
+        if (data.d.RetData.Tbl.Rows.length > 0) {
+          var access = data.d.RetData.Tbl.Rows[0];
+          if (access.CanAccess==true){
+            $('#packages').hide();
+            $('#mainMenuLeft #navPackages, #navPackages').show();
+            $('#mainMenuLeft #navSettings, #navSettings').show();
+          }else{
+            $('#caseFilter .orgCell').hide();
+            $('#caseFilter #statusMyCase, #caseFilter .mycase').hide();
+          }
+        }
+      }
+    }
+  });
+}
+
 function GetBasicInformation(personID) {
   var data = {'PersonID': personID};
   $.ajax({
@@ -194,15 +225,6 @@ function GetBasicInformation(personID) {
     success: function(data){
       if ((data) && (data.d.RetData.Tbl.Rows.length > 0)) {
         $('.profileName').html(data.d.RetData.Tbl.Rows[0].DisplayName);
-        if (data.d.RetData.Tbl.Rows[0].EntityType == 'I'){
-          //$('#navReport').show();
-          $('#packages').hide();
-          $('#mainMenuLeft #navPackages, #navPackages').show();
-          $('#mainMenuLeft #navSettings, #navSettings').show();
-        }else{
-          $('#caseFilter .orgCell').hide();
-          $('#caseFilter #statusMyCase, #caseFilter .mycase').hide();
-        }
       }
     },
     error: function(XMLHttpRequest, data, errorThrown){

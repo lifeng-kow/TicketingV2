@@ -60,6 +60,7 @@ function getOrgnisationInfo(PersonID){
 };
 
 function getPointofContact(PersonID){
+  showOrgContact();
   var data = {'PersonID':PersonID};
   $.ajax({
     url: apiSrc+"BCMain/iCtc1.GetPointOfContactInfo.json",
@@ -73,7 +74,6 @@ function getPointofContact(PersonID){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
           var pointOfContact = data.d.RetData.Tbl.Rows[0];
-          showOrgContact();
           $('.poc1Name').html(pointOfContact.POCName);
           $('.poc1Contact').html(pointOfContact.POCContact);
           $('.poc1Email').html(pointOfContact.POCEmail);
@@ -229,6 +229,7 @@ function updateOrgBasic(PersonID){
             'WebPartKey':'021cb7cca70748ff89795e3ad544d5eb',
             'ReqGUID': 'b4bbedbf-e591-4b7a-ad20-101f8f656277' },
     success: function(data){
+      console.log(data);
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
           if (data.d.RetData.Tbl.Rows[0].Success == true) {
@@ -306,6 +307,7 @@ function showOrgProfile(){
   $('#profileData').append(orgProfile);
   $('#basicForm').hide();
   $('#basicSubmit').click(function(){
+    console.log(appCookie.personID);
     updateOrgBasic(appCookie.personID);
   });
 }

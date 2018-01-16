@@ -17,7 +17,7 @@
     </title>
     <link rel="shortcut icon" href="{{root}}favicon.ico" />
     <link rel="stylesheet" href="{{root}}assets/css/app.css">
-
+    
   	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
   </head>
   <body id="page-{{page}}">
@@ -32,20 +32,19 @@
     </div>
     <script src="{{root}}assets/js/app.js"></script>
     {{#ifpage 'TicketingHome'}}
-      <script src="{{root}}assets/js/single-page/packagelist.js"></script>
-      <script src="{{root}}assets/js/single-page/caselist.js"></script>
+      <script src="{{root}}assets/js/single-page/TicketingHome.js"></script>
     {{/ifpage}}
     {{#ifpage 'login'}}
       <script src="{{root}}assets/js/single-page/login.js"></script>
     {{/ifpage}}
     {{#ifpage 'case'}}
-      <script src="{{root}}assets/js/single-page/casedetails.js"></script>
+      <script src="{{root}}assets/js/single-page/case.js"></script>
     {{/ifpage}}
     {{#ifpage 'packages'}}
-      <script src="{{root}}assets/js/single-page/packagelist.js"></script>
+      <script src="{{root}}assets/js/single-page/package.js"></script>
     {{/ifpage}}
     {{#ifpage 'packageDetails'}}
-      <script src="{{root}}assets/js/single-page/packagelist.js"></script>
+      <script src="{{root}}assets/js/single-page/packageDetails.js"></script>
     {{/ifpage}}
     {{#ifpage 'profile'}}
       <script src="{{root}}assets/js/single-page/profile.js"></script>
