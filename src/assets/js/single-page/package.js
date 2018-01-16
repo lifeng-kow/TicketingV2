@@ -49,8 +49,8 @@ function addNewPackage(){
     dataType: "json",
     xhrFields: {withCredentials: true},
     data: { 'data':JSON.stringify(data),
-            'WebPartKey':'021cb7cca70748ff89795e3ad544d5eb',
-            'ReqGUID': 'b4bbedbf-e591-4b7a-ad20-101f8f656277' },
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
@@ -80,8 +80,8 @@ function getPackageList(){
     dataType: "json",
     xhrFields: {withCredentials: true},
     data: {'data':JSON.stringify(data),
-          'WebPartKey':'021cb7cca70748ff89795e3ad544d5eb',
-          'ReqGUID': 'b4bbedbf-e591-4b7a-ad20-101f8f656277'},
+          'WebPartKey':WebPartVal,
+          'ReqGUID': getGUID()},
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
         var htmlString = '';
@@ -113,8 +113,8 @@ function getOrgnaisationList(){
     dataType: "json",
     xhrFields: {withCredentials: true},
     data: { 'data':JSON.stringify(data),
-            'WebPartKey':'021cb7cca70748ff89795e3ad544d5eb',
-            'ReqGUID': 'b4bbedbf-e591-4b7a-ad20-101f8f656277' },
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length == 1) {
@@ -143,8 +143,8 @@ function getProductList(){
     dataType: "json",
     xhrFields: {withCredentials: true},
     data: { 'data':JSON.stringify(data),
-            'WebPartKey':'021cb7cca70748ff89795e3ad544d5eb',
-            'ReqGUID': 'b4bbedbf-e591-4b7a-ad20-101f8f656277' },
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
@@ -187,8 +187,8 @@ function GetDropdownList(id, category) {
     dataType: "json",
     xhrFields: {withCredentials: true},
     data: { 'data': JSON.stringify(data),
-            'WebPartKey':'021cb7cca70748ff89795e3ad544d5eb',
-            'ReqGUID': 'b4bbedbf-e591-4b7a-ad20-101f8f656277' },
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
@@ -203,4 +203,14 @@ function GetDropdownList(id, category) {
       }
     }
   });
+};
+
+function getGUID() {
+	var d = new Date().getTime();
+	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+		var r = (d + Math.random() * 16) % 16 | 0;
+		d = Math.floor(d / 16);
+		return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+	});
+	return uuid;
 };

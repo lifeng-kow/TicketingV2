@@ -14,7 +14,8 @@ import Foundation from 'foundation-sites';
 
 $(document).foundation();
 
-var appCookie, igwasCookie, WebPartVal, guid;
+var appCookie, igwasCookie;
+window.WebPartVal='';
 
 //document ready
 $(function(){
@@ -22,8 +23,6 @@ $(function(){
   window.Master = new Master();
   //get page name
   pageName = $('body').attr('id').replace('page-','');
-
-  guid = getGUID();
 
   igwasCookie = Cookies.getJSON('IGWAS');
   if (igwasCookie){
@@ -190,8 +189,8 @@ function checkAccess(){
     dataType: "json",
     xhrFields: {withCredentials: true},
     data: { 'data':JSON.stringify(data),
-            'WebPartKey':'021cb7cca70748ff89795e3ad544d5eb',
-            'ReqGUID': 'b4bbedbf-e591-4b7a-ad20-101f8f656277' },
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
@@ -219,7 +218,7 @@ function GetBasicInformation(personID) {
     xhrFields: {withCredentials: true},
     data: {
       'data': JSON.stringify(data),
-      'WebPartKey':WebPartVal,
+      'WebPartKey': WebPartVal,
       'ReqGUID': getGUID()
     },
     success: function(data){
