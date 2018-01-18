@@ -112,6 +112,7 @@ function GetCaseDetails(caseId){
           }
           if (caseDetails.BillToPackageID!=''){
             $('#reviewForm .charge').hide();
+            $("reviewForm .charge, #review #approval, #review #charges, #reviewForm #packageChoice").prop('disabled', true);
           }
           if ($('#reviewForm #packageChoice').val().length==0){
             $('#packageChoice').append('<option value="'+caseDetails[i].BillToPackageID+'">'+caseDetails[i].PackageDetail+'</option>');
