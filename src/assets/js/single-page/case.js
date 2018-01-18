@@ -256,8 +256,7 @@ function checkAccess(){
             $("#reviewForm .charge, #submit").show();
           }else{
             $("#reviewForm .charge, #submit").hide();
-            $("input").prop('readOnly', true);
-            $("select").prop('disabled', true);
+            $("input, textarea, select").prop('disabled', true);
           }
         }
       }
