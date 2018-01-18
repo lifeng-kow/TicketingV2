@@ -52,7 +52,14 @@ function getOrgnisationInfo(PersonID){
           $('#entityKey').val(organisationInfo.EntityKey);
           $('#tel1').val(organisationInfo.Tel1);
           $('#email').val(organisationInfo.Email1);
-          $('#address').val(organisationInfo.FullAddress);
+          $('#country').val(organisationInfo.Country);
+          $('#postalCode').val(organisationInfo.PostalCode);
+          $('#city').val(organisationInfo.City);
+          $('#state').val(organisationInfo.State);
+          $('#blockNo').val(organisationInfo.AddrP1);
+          $('#street').val(organisationInfo.AddrP3);
+          $('#unit').val(organisationInfo.AddrP2);
+          $('#building').val(organisationInfo.AddrP4);
         }
       }
     }
@@ -164,7 +171,14 @@ function GetBasicInformation(personID) {
           $('#tel1').val(personalInfo.Tel1);
           $('#mobile').val(personalInfo.Mobile);
           $('#email').val(personalInfo.Email1);
-          $('#address').val(personalInfo.FullAddress);
+          $('#country').val(personalInfo.Country);
+          $('#postalCode').val(personalInfo.PostalCode);
+          $('#city').val(personalInfo.City);
+          $('#state').val(personalInfo.State);
+          $('#blockNo').val(personalInfo.AddrP1);
+          $('#street').val(personalInfo.AddrP3);
+          $('#unit').val(personalInfo.AddrP2);
+          $('#building').val(personalInfo.AddrP4);
         }
       }
     },
@@ -179,12 +193,19 @@ function GetBasicInformation(personID) {
 }
 
 function updateIndBasic(PersonID){
-  var name, tel1, mobile, email, address;
+  var name, tel1, mobile, email, country, postalCode, city, state, blockNo, street, unit, building;
   name = $('#name').val();
   tel1 = $('#tel1').val();
   mobile = $('#mobile').val();
   email = $('#email').val();
-  address = $('#address').val();
+  country = $('#country').val();
+  postalCode = $('#postalCode').val();
+  city = $('#city').val();
+  state = $('#state').val();
+  blockNo = $('#blockNo').val();
+  street = $('#street').val();
+  unit = $('#unit').val();
+  building = $('#building').val();
 
   if (IsValidContact(tel1)==false || IsValidContact(mobile)==false){
     alert('Invalid contact!');
@@ -194,7 +215,7 @@ function updateIndBasic(PersonID){
     return false;
   }
 
-  var data = { "PID": PersonID, "name": name, "tel1": tel1, "mobile": mobile, "email": email, "address": address };
+  var data = { "PID": PersonID, "name": name, "tel1": tel1, "mobile": mobile, "email": email, "country": country, "postalCode": postalCode, "city": city, "state": state, "blockNo": blockNo, "street": street, "unit": unit, "building": building };
   $.ajax({
     url: apiSrc+"BCMain/iCtc1.UpdateIndBasic.json",
     method: "POST",
@@ -356,16 +377,23 @@ function showIndProfile(){
   var indProfile = '';
   indProfile = '<div class="toggleContent"><div id="basicContent" class="grid-container form">'+
   '<div class="grid-x grid-padding-x"> <div class="cell"> <div class="labelText"> Name </div> <div class="text indName"> </div> </div> </div>'+
-  '<div class="grid-x grid-padding-x"> <div class="cell"> <div class="labelText"> Contact No (O) </div> <div class="text indTel"> </div> </div> </div>'+
-  '<div class="grid-x grid-padding-x"> <div class="cell"> <div class="labelText"> Contact No (M) </div> <div class="text indMobile"> </div> </div> </div>'+
-  '<div class="grid-x grid-padding-x"> <div class="cell"> <div class="labelText"> Email </div> <div class="text indEmail"> </div> </div> </div>'+
+  '<div class="grid-x grid-padding-x"> <div class="cell small-12 medium-4"> <div class="labelText"> Contact No (O) </div> <div class="text indTel"> </div> </div>'+
+  '<div class="cell small-12 medium-4"> <div class="labelText"> Contact No (M) </div> <div class="text indMobile"> </div> </div>'+
+  '<div class="cell small-12 medium-4"> <div class="labelText"> Email </div> <div class="text indEmail"> </div> </div> </div>'+
   '<div class="grid-x grid-padding-x"> <div class="cell"> <div class="labelText"> Address </div> <div class="text indAddress"> </div> </div> </div> </div>'+
   '<form id="basicForm" class="grid-container">'+
   '<div class="grid-x grid-padding-x"> <div class="cell"> <label for="name"> Name </label> <input type="text" id="name"/> </div> </div>'+
-  '<div class="grid-x grid-padding-x"> <div class="cell"> <label for="tel1"> Contact No (O) </label> <input type="text" id="tel1"/> </div> </div>'+
-  '<div class="grid-x grid-padding-x"> <div class="cell"> <label for="mobile"> Contact No (M) </label> <input type="text" id="mobile"/> </div> </div>'+
-  '<div class="grid-x grid-padding-x"> <div class="cell"> <label for="email"> Email </label> <input type="text" id="email"/> </div> </div>'+
-  '<div class="grid-x grid-padding-x"> <div class="cell"> <label for="address"> Address </label> <input type="text" id="address"/> </div> </div>'+
+  '<div class="grid-x grid-padding-x"> <div class="cell small-12 medium-4"> <label for="tel1"> Contact No (O) </label> <input type="text" id="tel1"/> </div>'+
+  '<div class="cell small-12 medium-4"> <label for="mobile"> Contact No (M) </label> <input type="text" id="mobile"/> </div>'+
+  '<div class="cell small-12 medium-4"> <label for="email"> Email </label> <input type="text" id="email"/> </div> </div>'+
+  '<div class="grid-x grid-padding-x"> <div class="cell small-12 medium-3"> <label for="address"> Country </label> <input type="text" id="country"/> </div>'+
+  '<div class="cell small-12 medium-3"> <label for="address"> Postal Code </label> <input type="text" id="postalCode"/> </div>'+
+  '<div class="cell small-12 medium-3"> <label for="address"> City </label> <input type="text" id="city"/> </div>'+
+  '<div class="cell small-12 medium-3"> <label for="address"> State </label> <input type="text" id="state"/> </div> </div>'+
+  '<div class="grid-x grid-padding-x"> <div class="cell small-12 medium-3"> <label for="address"> Block / House No. </label> <input type="text" id="blockNo"/> </div>'+
+  '<div class="cell small-12 medium-6"> <label for="address"> Street </label> <input type="text" id="street"/> </div> </div>'+
+  '<div class="grid-x grid-padding-x"> <div class="cell small-12 medium-3"> <label for="address"> Uit(#00-0000) </label> <input type="text" id="unit"/> </div>'+
+  '<div class="cell small-12 medium-6"> <label for="address"> Building </label> <input type="text" id="building"/> </div> </div>'+
   '<footer class="grid-x grid-padding-x"> <button type="button" id="basicSubmit" data-close class="btn cell small-12 medium-offset-4 medium-4">Submit</button> </footer> </form> </div>';
 
   $('#profileData').append(indProfile);
