@@ -37,22 +37,24 @@
          <span aria-hidden="true">&times;</span>
          </button>
          <div class="grid-x grid-padding-x orgCell">
-            <div class="cell">
+            <div class="cell small-12 medium-6">
                <label>Organization
                  <select id="organisation" name="organisation">
                  </select>
                </label>
             </div>
+            <div class="cell small-12 medium-6">
+               <label>Status
+                 <select id="status" name="status">
+                    <option value="">-- Please Select --</option>
+                    <option value="Open" selected>Open</option>
+                    <option value="Closed">Closed</option>
+                 </select>
+               </label>
+            </div>
          </div>
          <div class="grid-x grid-padding-x">
-            <fieldset class="cell checkboxGroup">
-               <legend>Status</legend>
-               <select id="status" name="status">
-                  <option value="">-- Please Select --</option>
-                  <option value="Open" selected>Open</option>
-                  <option value="Closed">Closed</option>
-               </select>
-            </fieldset>
+
          </div>
          <div class="grid-x grid-padding-x">
             <fieldset class="cell">
