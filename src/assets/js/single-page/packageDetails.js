@@ -1,9 +1,32 @@
+var access=false;
 
 $(function(){
 
   //get packageID from url
   var urlParams = new URLSearchParams(window.location.search),
       packageID = urlParams.get('packageID');
+
+  var checkAccess =
+    $.ajax({
+      url: apiSrc+"BCMain/iCtc1.CheckIsAdmin.json",
+      method: "POST",
+      dataType: "json",
+      xhrFields: {withCredentials: true},
+      data: { 'data':JSON.stringify({}),
+              'WebPartKey':WebPartVal,
+              'ReqGUID': getGUID() },
+      success: function(data){
+        if ((data) && (data.d.RetVal === -1)) {
+          if (data.d.RetData.Tbl.Rows.length > 0) {
+            access = data.d.RetData.Tbl.Rows[0].CanAccess;
+          }
+        }
+      }
+    });
+
+  if (access==false){
+    $('.dataAccess').hide();
+  }
 
   getPackageDetails(packageID);
   getPackageTransaction(packageID);
@@ -105,7 +128,7 @@ function getPackageTransaction(PackageID){
           var htmlString = '';
           for (var i=0; i<transactionDetails.length; i++ ){
             var tranDate = convertDateTime(transactionDetails[i].TranDate,'date');
-            htmlString += '<tr id="'+ transactionDetails[i].PackageID  +'"> <td>'+transactionDetails[i].TranType+'</td> <td>'+transactionDetails[i].Days+'</td> <td>'+tranDate+'</td> <td>'+transactionDetails[i].TranCreatedBy+'</td> <td>'+transactionDetails[i].Remarks+'</td> <td>'+transactionDetails[i].CaseID+'</td> </tr>';
+            htmlString += '<tr id="'+ transactionDetails[i].PackageID  +'"> <td>'+transactionDetails[i].TranType+'</td> <td>'+transactionDetails[i].Days+'</td> <td>'+tranDate+'</td> <td>'+transactionDetails[i].TranCreatedBy+'</td> <td>'+transactionDetails[i].Remarks+'</td> <td> <a href="./case.html?caseID='+transactionDetails[i].CaseID+'"">'+transactionDetails[i].CaseID+'</a> </td> </tr>';
           }
           $('.packagetranTable tbody').html(htmlString);
         }
