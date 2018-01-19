@@ -20,8 +20,7 @@ $(function(){
     });
 
   //GetDropdownList('#caseAddForm #module, #caseFilter #module', 'module');
-  $.when(checkAccess).then(function( x ) {
-    getOrgnaisationList();
+  $.when(checkAccess,getOrgnaisationList()).then(function( x ) {
     getCurrentPackageList();
     getCasesList();
   });
@@ -44,6 +43,7 @@ function getCasesList(){
 
   var Organization, Status, DateFrom, DateTo;
   Organization = $('#caseFilter #organisation').val();
+  console.log(Organization);
   Status = $('#caseFilter #status').val();
   DateFrom = $('#caseFilter #dateCreatedFrom').val();
   DateTo = $('#caseFilter #dateCreatedTo').val();
