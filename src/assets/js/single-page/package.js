@@ -22,10 +22,6 @@ $(function(){
   $('#packageAddForm #submit').click(function(){
     addNewPackage();
   });
-  //add transaction
-  $('#packageTransactionAddForm #submit').click(function(){
-    addNewtransaction(packageID, '');
-  });
 });
 
 function addNewPackage(){
