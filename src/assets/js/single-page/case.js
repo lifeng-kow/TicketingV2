@@ -286,7 +286,7 @@ function getStaffList(){
           }
         }
       }
-      $('#information #assignedTo').html(html);
+      $('#information #assignedTo').append(html);
     }
   });
 }
