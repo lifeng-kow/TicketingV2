@@ -50,7 +50,7 @@ function getCasesList(){
 
   var data = {'Organization':Organization, 'Status':Status, 'DateFrom':DateFrom, 'DateTo': DateTo};
   if (access==false){
-    caseThead.html('<tr><th colspan="2">Title</th><th>Type</th><th>Created Date</th><th>Status</th></tr>');
+    caseThead.html('<tr><th colspan="2">Subject</th><th>Type</th><th>Created Date</th><th>Status</th></tr>');
   }
   caseTbody.html('');
   $.ajax({

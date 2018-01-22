@@ -15,29 +15,48 @@ $(function(){
   $("#review #approval").change(function(){
     if ($("#review #approval").val()=='Yes'){
       $('#reviewForm #availablePackage, #reviewForm .charge').show();
+      checkChargeDisplay();
     }else{
       $('#reviewForm #availablePackage, #reviewForm .charge').hide();
+      checkChargeDisplay();
     }
   });
 
   $("#reviewForm #charges").change(function(){
     if ($("#reviewForm #charges").val() > 0){
       $('#reviewForm #chargeForm').show();
+      if($('#reviewForm #packageChoice').val().length > 0){
+        $('#reviewForm .charge').show();
+      }
+      checkChargeDisplay();
     }else{
       $('#reviewForm #chargeForm, #reviewForm .charge').hide();
+      checkChargeDisplay();
     }
   });
 
   //Review submit
   $('#reviewForm .charge').click(function(){
     chargeToPackage(caseID);
+    checkChargeDisplay();
   });
 
   //Add New Log
   $('#submit').click(function(){
     editCase(caseID);
+    checkChargeDisplay();
   });
 });
+
+function checkChargeDisplay(){
+  if ($("#reviewForm .charge").css('display') !== 'none'){
+    $("#submit").removeClass("medium-offset-5");
+    $("#submit").addClass("medium-offset-4");
+  }else{
+    $("#submit").removeClass("medium-offset-4");
+    $("#submit").addClass("medium-offset-5");
+  }
+}
 
 function GetAvailablePackage(caseId){
   $('#packageChoice').html('');
@@ -213,30 +232,34 @@ function chargeToPackage(caseID){
   }
   editCase(caseID);
   var data = {'CaseID':caseID, 'packageID':packageID};
-  $.ajax({
-    url: apiSrc+"BCMain/FL1.ChargeToPackageID.json",
-    method: "POST",
-    dataType: "json",
-    xhrFields: {withCredentials: true},
-    data: { 'data':JSON.stringify(data),
-            'WebPartKey':WebPartVal,
-            'ReqGUID': getGUID() },
-    success: function(data){
-      if ((data) && (data.d.RetVal === -1)) {
-        if (data.d.RetData.Tbl.Rows.length > 0) {
-          if (data.d.RetData.Tbl.Rows[0].Success == true) {
-            $.when(GetAvailablePackage(caseID)).then(function () {
-              GetCaseDetails(caseID);
-              GetCaseHistory(caseID);
-          	});
-          } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
+  if (confirm("Confirming charging to package?")){
+    $.ajax({
+      url: apiSrc+"BCMain/FL1.ChargeToPackageID.json",
+      method: "POST",
+      dataType: "json",
+      xhrFields: {withCredentials: true},
+      data: { 'data':JSON.stringify(data),
+              'WebPartKey':WebPartVal,
+              'ReqGUID': getGUID() },
+      success: function(data){
+        if ((data) && (data.d.RetVal === -1)) {
+          if (data.d.RetData.Tbl.Rows.length > 0) {
+            if (data.d.RetData.Tbl.Rows[0].Success == true) {
+              $.when(GetAvailablePackage(caseID)).then(function () {
+                GetCaseDetails(caseID);
+                GetCaseHistory(caseID);
+            	});
+            } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
+          }
+        }
+        else {
+          alert(data.d.RetMsg);
         }
       }
-      else {
-        alert(data.d.RetMsg);
-      }
-    }
-  });
+    });
+  }else{
+    return false;
+  }
 };
 
 function checkAccess(){

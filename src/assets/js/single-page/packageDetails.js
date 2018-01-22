@@ -24,9 +24,13 @@ $(function(){
       }
     });
 
-  if (access==false){
-    $('.dataAccess').hide();
-  }
+  $.when(checkAccess).then(function( x ) {
+    if (access==false){
+      $('.dataAccess').hide();
+    }else{
+      $('.dataAccess').show();
+    }
+  });
 
   getPackageDetails(packageID);
   getPackageTransaction(packageID);
