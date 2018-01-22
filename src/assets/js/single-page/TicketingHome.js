@@ -168,7 +168,7 @@ function getCurrentPackageList(){
           var htmlString = '';
           for (var i=0; i<packages.length; i++ ){
             var date = convertDateTime(packages[i].ExpiryDate,'date');
-            htmlString += '<div class="medium-6 large-4 cell clearfix"> <a href="./packageDetails.html?packageID='+packages[i].PackageID+'"> <div class="card"> <div class="grid-x card-divider"> <div class="cell auto"> <h3">'+packages[i].Product+'</h3>'
+            htmlString += '<div class="medium-6 large-4 cell clearfix"> <a href="./packageDetails.html?packageID='+packages[i].PackageID+'"> <div class="card"> <div class="grid-x card-divider"> <div class="cell auto"> <h3>'+packages[i].Product+'</h3>'
             htmlString +=	'</div>'
             if (packages[i].ManDaysLeft > 0) {
               htmlString += '<div class="manDays cell small-5"> <div class="grid-y" style="height: 60px;"> <div class="cell small-9"><b>'+packages[i].ManDaysLeft+'</b>/<span class="totalDays">'+packages[i].ManDaysBought+'</span></div> <small class="cell small-3">Man-day(s)</small> </div> </div>'
