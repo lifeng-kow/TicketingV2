@@ -20,7 +20,7 @@ $(function(){
     });
 
   //GetDropdownList('#caseAddForm #module, #caseFilter #module', 'module');
-  $.when(checkAccess,getOrgnaisationList()).then(function( x ) {
+  $.when(getOrgnaisationList(),checkAccess).then(function( x ) {
     getCurrentPackageList();
     getCasesList();
   });
