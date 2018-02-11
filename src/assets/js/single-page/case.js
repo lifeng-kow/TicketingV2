@@ -2,7 +2,7 @@
 $(function(){
 
   //get caseID from URL
-  var urlParams = new URLSearchParams(window.location.search),
+  /*var urlParams = new URLSearchParams(window.location.search),
       caseID = urlParams.get('caseID');
 
   $.when(GetAvailablePackage(caseID),getStaffList()).then(function () {
@@ -45,7 +45,7 @@ $(function(){
   $('#submit').click(function(){
     editCase(caseID);
     checkChargeDisplay();
-  });
+  });*/
 });
 
 function checkChargeDisplay(){
@@ -277,9 +277,9 @@ function checkAccess(){
         if (data.d.RetData.Tbl.Rows.length > 0) {
           var access = data.d.RetData.Tbl.Rows[0];
           if (access.CanAccess==true){
-            $("#reviewForm .charge, #submit").show();
+            $("#reviewForm .charge").show();
           }else{
-            $("#reviewForm .charge, #submit").hide();
+            $("#reviewForm .charge").hide();
             $("input, textarea, select").prop('disabled', true);
           }
         }

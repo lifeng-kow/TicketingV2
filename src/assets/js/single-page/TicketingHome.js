@@ -1,7 +1,7 @@
 var access=false;
 
 $(function(){
-  var checkAccess =
+  /*var checkAccess =
     $.ajax({
       url: apiSrc+"BCMain/iCtc1.CheckIsAdmin.json",
       method: "POST",
@@ -31,7 +31,7 @@ $(function(){
   });
   $('#caseFilter .tabBoxButtonSubmit').click(function(){
     getCasesList();
-  });
+  });*/
 
 });
 

@@ -2,201 +2,274 @@
   <div class="boxContent">
     <a class="button buttonType2 left buttonType2Back" href="./TicketingHome.html">Back to Case Listing</a>
   </div>
-
-   <header class="titleMain">
-      <h1 class="caseTitle">
-      </h1>
-   </header>
-   <section class="toggleBox" id="summary">
-     <header class="toggleTitle show-for-small-only">
-        <h2>Summary</h2>
-     </header>
-     <div class="grid-container toggleContent">
-       <div class="grid-x grid-margin-x">
-          <div class="cell  small-12 medium-6 ">
-             <b>Organisation</b>
-             <span class="organisation">
-             </span>
-          </div>
-       </div>
-       <div class="grid-x grid-margin-x">
-          <div class="cell  small-12 medium-6 ">
-             <b>Name</b>
-             <span class="name">
-             </span>
-          </div>
-       </div>
-       <div class="grid-x grid-margin-x">
-          <div class="cell  small-12 medium-6 ">
-             <b>Email</b>
-             <span class="email">
-             </span>
-          </div>
-          <div class="cell  small-12 medium-6 ">
-             <b>Contact No</b>
-             <span class="contact">
-             </span>
-          </div>
-       </div>
-        <div class="grid-x grid-margin-x">
-           <div class="cell small-12 medium-6 ">
-              <b>Title</b>
-              <span class="title">
-              </span>
-           </div>
-           <div class="cell small-12 medium-6 ">
-              <b>Category</b>
-              <span class="category">
-              </span>
-           </div>
-        </div>
-        <div class="grid-x grid-margin-x">
-           <div class="cell small-12 medium-6 ">
-              <b>Details</b>
-              <span class="details">
-              </span>
-           </div>
-        </div>
-        <div class="grid-x grid-margin-x">
-           <div class="cell  small-12 medium-6 ">
-              <b>Created Date &amp; Time</b>
-              <span class="createdDate">
-              </span>
-           </div>
-           <div class="cell  small-12 medium-6 ">
-              <b>Last Update Date &amp; Time</b>
-              <span class="updatedDate">
-              </span>
-           </div>
+  <header class="titleMain">
+    <h1 class="caseTitle">
+    </h1>
+  </header>
+  <section class="toggleBox" id="summary">
+    <header class="toggleTitle show-for-small-only">
+      <h2>Summary</h2>
+    </header>
+    <div class="grid-container toggleContent">
+      <div class="grid-x grid-margin-x">
+        <div class="cell  small-12 medium-6 ">
+          <b>Organisation</b>
+          <span class="organisation">
+          </span>
         </div>
       </div>
-   </section>
-   <section class="toggleBox" id="information">
-      <header class="toggleTitle">
-         <h2>Status &amp; Schedule</h2>
-      </header>
-      <div class="grid-container toggleContent form">
-         <div class="grid-x grid-padding-x">
-            <div class="cell small-12 medium-6 orgData">
-              <label>
-                Status
-                <select id="status">
-                  <option value="">-- Please Select --</option>
-                  <option value="Open">Open</option>
-                  <option value="Closed">Closed</option>
-                </select>
-              </label>
-            </div>
-            <div class="cell small-12 medium-6">
-              <label>
-                Status Remarks
-                <input type="text" id="statusRemarks" name="statusRemarks"/>
-              </label>
-            </div>
-         </div>
-         <div class="grid-x grid-padding-x">
-           <div class="cell small-12 medium-6">
-             <label>
-               Schedule Date From
-               <input type="date" id="dateFrom" name="dateFrom" />
-             </label>
-           </div>
-           <div class="cell small-12 medium-6">
-             <label>
-               Schedule Date To
-               <input type="date" id="dateTo" name="dateTo" />
-             </label>
-           </div>
-         </div>
-         <div class="grid-x grid-padding-x">
-            <div class="cell small-12 medium-6">
-              <label>
-                Assigned To
-                <select id="assignedTo">
-
-                </select>
-              </label>
-            </div>
-         </div>
-      </div>
-   </section>
-
-   <section class="toggleBox" id="review">
-      <header class="toggleTitle">
-         <h2>Note &amp; Charges</h2>
-      </header>
-      <div id="reviewForm" class="grid-container toggleContent form">
-         <div>
-            <label>
-               Notes
-               <textarea id="notes" name="notes"></textarea>
-            </label>
-          </div>
-          <div class="grid-x grid-padding-x">
-            <div class="cell small-12 medium-6">
-              <label>
-                 Category
-                 <select id="category">
-                    <option value="">-- Please Select --</option>
-                    <option value="Bugs">Bugs</option>
-                    <option value="CR">Change Request</option>
-                 </select>
-              </label>
-            </div>
-            <div class="cell small-12 medium-6">
-              <label>
-                Chargeable Man-day(s)
-                <input type="text" id="charges" name="charges"/>
-              </label>
-            </div>
-          </div>
-          <div id="chargeForm">
-            <label>
-              Approval
-              <select id="approval" name="approval">
-                <option value="">-- Please Select --</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </label>
-            <label>
-              Approval Remarks
-              <input type="text" id="approvalRemarks" name="approvalRemarks"/>
-            </label>
-            <div id="availablePackage">
-              <label>
-                Charge To
-                <select id="packageChoice" name="packageChoice">
-                </select>
-              </label>
-            </div>
-         </div>
-         <footer class="grid-x grid-margin-x">
-              <button type="button" id="submit" class="cell small-12 medium-2 medium-offset-4 save" src="">Save</button>
-              <button type="button" class="cell small-12 medium-2 charge" src="">Charge</button>
-         </footer>
-      </div>
-   </section>
-
-   <section class="toggleBox" id="log">
-      <header class="toggleTitle">
-         <h2>History</h2>
-      </header>
-      <div class="toggleContent">
-        <div class="scrollContainer scrollY">
-           <table class="caseHistory">
-              <thead>
-                 <tr>
-                    <th>Date</th>
-                    <th>By</th>
-                    <th>Description</th>
-                 </tr>
-              </thead>
-              <tbody>
-              </tbody>
-           </table>
+      <div class="grid-x grid-margin-x">
+        <div class="cell  small-12 medium-6 ">
+          <b>Contact Person</b>
+          <span class="name">
+          </span>
         </div>
       </div>
-   </section>
+      <div class="grid-x grid-margin-x">
+        <div class="cell  small-12 medium-6 ">
+          <b>Email</b>
+          <span class="email">
+          </span>
+        </div>
+        <div class="cell  small-12 medium-6 ">
+          <b>Contact No</b>
+          <span class="contact">
+          </span>
+        </div>
+      </div>
+      <div class="grid-x grid-margin-x">
+        <div class="cell small-12 medium-6 ">
+          <b>Subject</b>
+          <span class="subject">
+          </span>
+        </div>
+      </div>
+      <div class="grid-x grid-margin-x">
+        <div class="cell small-12 medium-6 ">
+          <b>Details</b>
+          <span class="details">
+          </span>
+        </div>
+      </div>
+      <div class="grid-x grid-margin-x">
+        <div class="cell  small-12 medium-6 ">
+          <b>Created Date &amp; Time</b>
+          <span class="createdDate">
+          </span>
+        </div>
+        <div class="cell  small-12 medium-6 ">
+          <b>Last Update Date &amp; Time</b>
+          <span class="updatedDate">
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="toggleBox" id="summary">
+    <header class="grid-x">
+      <h2 class="cell auto">Staff Review</h2>
+      <button type="button" class="buttonType2 buttonChargeAdd cell medium-2 text-right"  data-open="chargeForm">Charge</button>
+      <button type="button" class="buttonType2 buttonReviewAdd cell medium-2 text-right"  data-open="reviewForm">Review</button>
+    </header>
+    <div class="grid-container toggleContent">
+      <div class="grid-x grid-margin-x">
+        <div class="cell  small-12 medium-6 ">
+          <b>Status</b>
+          <span class="status">
+          </span>
+        </div>
+        <div class="cell  small-12 medium-6 ">
+          <b>Category</b>
+          <span class="category">
+          </span>
+        </div>
+      </div>
+      <div class="grid-x grid-margin-x">
+        <div class="cell  small-12 medium-6 ">
+          <b>Schedule Date From</b>
+          <span class="dateFrom">
+          </span>
+        </div>
+        <div class="cell  small-12 medium-6 ">
+          <b>Schedule Date To</b>
+          <span class="dateTo">
+          </span>
+        </div>
+      </div>
+      <div class="grid-x grid-margin-x">
+        <div class="cell  small-12 medium-6 ">
+          <b>Chargeable Man-hour(s)</b>
+          <span class="manHours">
+          </span>
+        </div>
+        <div class="cell  small-12 medium-6 ">
+          <b>Actual Hour(s)</b>
+          <span class="actualHour">
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="involvement">
+    <header class="grid-x">
+      <h2 class="cell auto">Involvement</h2>
+      <button type="button" class="buttonType2 buttonType2Add cell medium-3 text-right"  data-open="involvementForm">Add Involvement</button>
+    </header>
+    <div class="threadContainer" id="taskThread">
+      <div class="scrollContainer scrollY threadTask">
+        <!--Task thread insert here-->
+      </div>
+    </div>
+  </section>
+  <section id="activityLog">
+    <header class="grid-x">
+      <h2 class="cell auto">Activity Log</h2>
+      <button type="button" class="buttonType2 buttonType2Add cell medium-3 text-right"  data-open="activityForm">Add New Activity</button>
+    </header>
+    <div class="threadContainer" id="logThread">
+      <div class="scrollContainer scrollY threadLog">
+        <!--Log thread insert here-->
+      </div>
+    </div>
+  </section>
+  <form id="involvementForm" class="reveal lightBg" data-reveal>
+    <header class="grid-x grid-padding-x">
+      <h3 class="cell">New Activity</h3>
+      <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+      <span aria-hidden="true">&times;</span>
+      </button>
+    </header>
+    <div class="grid-x grid-padding-x">
+      <div class="cell">
+        <label>
+          Role
+          <select id="roles" name="roles">
+            <option value="">-- Select Roles --</option>
+            <option value="Developer">Developer</option>
+            <option value="Person in-charged">Person in-charged</option>
+          </select>
+        </label>
+      </div>
+      <div class="cell">
+        <label>
+          Staff
+          <select id="person" name="person">
+            <option value="">-- Select Staff --</option>
+            <option value="1">Admin</option>
+            <option value="6">Li Feng</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="grid-x grid-padding-x">
+      <div class="cell">
+        <label>
+        Task
+        <textarea id="task" name="task" placeholder="Task"></textarea>
+        </label>
+      </div>
+    </div>
+    <footer class="grid-x grid-margin-x">
+      <button type="button" id="submit" data-close class="btn cell small-12 medium-4 medium-offset-4">Submit</button>
+    </footer>
+  </form>
+  <form id="activityForm" class="reveal lightBg" data-reveal>
+    <header class="grid-x grid-padding-x">
+      <h3 class="cell">New Activity</h3>
+      <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+      <span aria-hidden="true">&times;</span>
+      </button>
+    </header>
+    <div class="grid-x grid-padding-x">
+      <div class="cell">
+        <label>
+        Description
+        <textarea id="description" name="description"></textarea>
+        </label>
+      </div>
+    </div>
+    <div class="grid-x grid-padding-x internalCheckBox">
+      <div class="cell">
+        <label class="callout calloutInline calloutNeutral">
+        <input type="checkbox" id="internal" name="internal" />
+        Internal</label>
+      </div>
+    </div>
+    <footer class="grid-x grid-margin-x">
+      <button type="button" id="submit" data-close class="btn cell small-12 medium-4 medium-offset-4">Submit</button>
+    </footer>
+  </form>
+  <form id="reviewForm" class="reveal lightBg" data-reveal>
+    <header class="grid-x grid-padding-x">
+      <h3 class="cell">Case Review</h3>
+      <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+      <span aria-hidden="true">&times;</span>
+      </button>
+    </header>
+    <div class="grid-x grid-padding-x">
+      <div class="cell small-12 medium-6">
+        <div class="cell">
+          <label>
+          Status
+          <select id="status" name="status">
+            <option value="">-- Please Select --</option>
+            <option value="Open">Open</option>
+            <option value="Closed">Closed</option>
+          </select>
+          </label>
+        </div>
+      </div>
+      <div class="cell small-12 medium-6">
+        <div class="cell">
+          <label>
+          Category
+          <select id="category" name="category">
+            <option value="">-- Please Select --</option>
+            <option value="Bugs">Bugs</option>
+            <option value="CR">Change Request</option>
+          </select>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="grid-x grid-padding-x">
+      <div class="cell small-12 medium-6">
+        <div class="cell">
+          <label>
+          Date From
+          <input type="date" id="scheduleDateFrom" name="scheduleDateFrom" />
+          </label>
+        </div>
+      </div>
+      <div class="cell small-12 medium-6">
+        <div class="cell">
+          <label>
+          Date To
+          <input type="date" id="scheduleDateTo" name="scheduleDateTo" />
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="grid-x grid-padding-x">
+      <div class="cell small-12 medium-6">
+        <div class="cell">
+          <label>
+          Chargeable Man-hour(s)
+          <input type="text" id="manHours" name="manHours" />
+          </label>
+        </div>
+      </div>
+      <div class="cell small-12 medium-6">
+        <div class="cell">
+          <label>
+          Actual Man-hour(s)
+          <input type="text" id="actualManHours" name="actualManHours" />
+          </label>
+        </div>
+      </div>
+    </div>
+    <footer class="grid-x grid-margin-x">
+      <button type="button" id="submit" data-close class="btn cell small-12 medium-4 medium-offset-4">Submit</button>
+    </footer>
+  </form>
 </div>
-<!-- cases end -->

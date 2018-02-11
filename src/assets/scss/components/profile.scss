@@ -1,4 +1,4 @@
-#profile {
+#lblWelcome {
   padding: $global-mobile-padding 0;
 
   .profileName {
@@ -10,7 +10,7 @@
 }
 
 @include breakpoint(medium) {
-  #profile {
+  #lblWelcome {
     padding: 2rem 0;
   }
 }

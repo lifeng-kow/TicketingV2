@@ -1,180 +1,480 @@
-<section id="profile" class="grid-x">
-   <div class="welcome cell">
-      Welcome
-      <b class="profileName">
-         <!-- user displayname -->
-      </b>
-   </div>
-   <!--<div class="organisation cell">HCA Hospice</div>-->
-</section>
-<!-- profile end -->
-<section id="packages" class="toggleBox">
-   <header class="toggleTitle">
-      <h2>Product Owned</h2>
-   </header>
-   <div class="grid-container toggleContent">
-      <div class="grid-x grid-margin-x packageGrid">
-         <!--insert current package here-->
-      </div>
-      <!--grid-->
-   </div>
-   <!--grid container-->
-</section>
-<!-- packages end -->
-<section id="caseContainer">
-  <div class="boxContent  show-for-small-only">
-    <button type="button" class="buttonType2 buttonType2Add left "  data-open="caseAddForm">Create Case</button>
+<section id="lblWelcome" class="grid-x">
+  <div class="welcome cell">
+    Welcome
+    <b class="profileName">
+      <!-- user displayname -->
+    </b>
   </div>
-   <header class="grid-x">
-      <h2 class="cell auto">Case(s)</h2>
-      <button type="button" class="buttonType2 buttonType2Add cell medium-3 text-right show-for-medium"  data-open="caseAddForm">Create Case</button>
-   </header>
-
-   <div id='caseFilter' class="caseFilter tabBoxContainer">
-      <button class="button button3 tabBoxButton" data-target="caseFilterForm" ><i class="icon"><img src="{{root}}assets/img/icon-light-filter.png" alt="icon"/></i>Filter</button>
-      <form class="form2 tabBoxContent reveal" id="caseFilterForm">
-         <button class="close-button tabBoxButtonClose" aria-label="Dismiss alert" type="button" data-close>
-         <span aria-hidden="true">&times;</span>
-         </button>
-         <div class="grid-x grid-padding-x">
-            <div class="cell small-12 medium-6 orgCell">
-               <label>Organization
-                 <select id="organisation" name="organisation">
-                 </select>
-               </label>
-            </div>
-            <div class="cell small-12 medium-6">
-               <label>Status
-                 <select id="status" name="status">
-                    <option value="">-- Please Select --</option>
-                    <option value="Open" selected>Open</option>
-                    <option value="Closed">Closed</option>
-                 </select>
-               </label>
-            </div>
-         </div>
-         <div class="grid-x grid-padding-x">
-         </div>
-         <div class="grid-x grid-padding-x">
-            <fieldset class="cell">
-               <legend>Date Created Range</legend>
-               <div class="grid-x grid-margin-x">
-                  <div class="cell medium-5">
-                     <label>
-                     <input type="date" id="dateCreatedFrom" name="dateCreatedFrom" placeholder="Date From" />
-                     </label>
-                  </div>
-                  <span class="cell auto text-center show-for-medium">-</span>
-                  <div class="cell medium-5">
-                     <label>
-                     <input type="date" id="dateCreatedTo" name="dateCreatedTo" placeholder="Date To" />
-                     </label>
-                  </div>
-               </div>
-            </fieldset>
-         </div>
-         <footer class="grid-x grid-margin-x">
-            <button type="button" class="cell small-12 medium-offset-4 medium-4 button tabBoxButtonSubmit">Filter</button>
-         </footer>
-      </form>
-   </div>
-
-   <div class="scrollContainer scrollY">
-      <table class="caseTable">
-         <thead>
-            <tr>
-               <th colspan="2">Subject</th>
-               <th>Type</th>
-               <th>Organisation</th>
-               <th>Created Date</th>
-               <th>Status</th>
-            </tr>
-         </thead>
-         <tbody>
-            <!-- case list -->
-         </tbody>
-      </table>
-   </div>
-   <!-- scroll container end -->
-   <footer>
-      <div class="legend">
-         <h6>Legend</h6>
-         <ul>
-            <li class="active">Open</li>
-            <li class="non-active">Closed</li>
-         </ul>
-      </div>
-   </footer>
 </section>
-<!-- caseContainer end -->
-<form id="caseAddForm" class="reveal medium lightBg" data-reveal >
-   <header onloadedmetadata=""class="grid-x grid-padding-x">
-      <h3 class="cell">New Case</h3>
-      <button class="close-button" data-close aria-label="Close modal" type="button">
+<section id="packages" class="toggleBox">
+  <header class="toggleTitle">
+    <h2>Product Owned</h2>
+  </header>
+  <div class="grid-container toggleContent">
+    <div class="grid-x grid-margin-x packageGrid">
+      <div class="medium-6 large-4 cell clearfix">
+        <div class="card">
+          <div class="grid-x card-divider">
+            <h3>Charitas</h3>
+          </div>
+          <div class="card-section">
+            <div class="packageType">Software Basic Maitenance</div>
+            <div class="expiring">Expiring: <i>31/12/2018</i></div>
+          </div>
+          <div class="card-section">
+            <div class="packageType">Software Assurance Plus * 4</div>
+            <div class="expiring">Utilized Man-hour(s): <i>16</i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="administartion" class="toggleBox">
+  <header class="toggleTitle">
+    <h2>Administartion</h2>
+  </header>
+  <div class="grid-container toggleContent">
+    <div class="grid-x grid-margin-x ">
+      <div class="large-3 cell" data-open="newUserForm">
+        <div class="card">
+          <div class="grid-x card-divider">
+            <div align="center" class="cell auto">
+              <img src="https://cdn1.iconfinder.com/data/icons/ui-5/502/user-512.png" width="100" height="100"> <br>
+              Add New User
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="large-3 cell" data-open="packageAddForm">
+        <div class="card">
+          <div class="grid-x card-divider">
+            <div align="center" class="cell auto">
+              <img src="https://cdn4.iconfinder.com/data/icons/pretty_office_3/256/Package-Add.png" width="100" height="100" > <br>
+              Add New Package
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="caseContainer">
+  <header class="grid-x">
+    <h2 class="cell auto">Case(s)</h2>
+    <button type="button" class="buttonType2 buttonType2Add cell medium-3 text-right show-for-medium"  data-open="caseAddForm">Create Case</button>
+  </header>
+  <div id='caseFilter' class="caseFilter tabBoxContainer">
+    <button class="button button3 tabBoxButton" data-target="caseFilterForm" ><i class="icon"><img src="{{root}}assets/img/icon-light-filter.png" alt="icon"/></i>Filter</button>
+    <form class="form2 tabBoxContent reveal" id="caseFilterForm">
+      <button class="close-button tabBoxButtonClose" aria-label="Dismiss alert" type="button" data-close>
       <span aria-hidden="true">&times;</span>
       </button>
-   </header>
-   <div class="grid-x grid-padding-x">
-      <div class="cell">
-         <label>
-         Organisation<span style="color:red">*</span>
-           <select id="organisation" name="organisation">
-           </select>
-         </label>
-      </div>
-   </div>
-   <div class="grid-x grid-padding-x">
-      <div class="cell">
-         <label>
-         Name of Contact Person<span style="color:red">*</span>
-         <input type="text" id="name" name="name"/>
-         </label>
-      </div>
-   </div>
-   <div class="grid-x grid-padding-x">
-      <div class="cell small-12 medium-6">
-         <label>
-         Email<span style="color:red">*</span>
-         <input type="text" id="email" name="email"/>
-         </label>
-      </div>
-      <div class="cell small-12 medium-6">
-         <label>
-         Contact No.<span style="color:red">*</span>
-         <input type="text" id="contact" name="contact"/>
-         </label>
-      </div>
-   </div>
-   <div class="grid-x grid-padding-x">
-      <div class="cell">
-         <label>
-         Subject<span style="color:red">*</span>
-         <input type="text" id="title" name="title"/>
-         </label>
-      </div>
-   </div>
-   <div class="grid-x grid-padding-x">
-      <div class="cell">
-         <label>
-          Request Type
-          <select id="category" name="category">
-             <option value="">-- Please Select --</option>
-             <option value="Bugs">Bugs</option>
-             <option value="CR">Change Request</option>
+      <div class="grid-x grid-padding-x">
+        <div class="cell small-12 medium-6 orgCell">
+          <label>Organization
+          <select id="organisation" name="organisation">
           </select>
-         </label>
+          </label>
+        </div>
+        <div class="cell small-12 medium-6">
+          <label>
+            Status
+            <select id="status" name="status">
+              <option value="">-- Please Select --</option>
+              <option value="Open" selected>Open</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </label>
+        </div>
       </div>
-   </div>
-   <div class="grid-x grid-padding-x">
-      <div class="cell">
-         <label>
-         Description<span style="color:red">*</span>
-         <textarea id="description" name="description"></textarea>
-         </label>
+      <div class="grid-x grid-padding-x">
+        <fieldset class="cell">
+          <div class="grid-x grid-margin-x">
+            <div class="cell medium-6">
+              <label>Date From
+              <input type="date" id="dateCreatedFrom" name="dateCreatedFrom" />
+              </label>
+            </div>
+            <div class="cell medium-6">
+              <label>Date To
+              <input type="date" id="dateCreatedTo" name="dateCreatedTo" />
+              </label>
+            </div>
+          </div>
+        </fieldset>
       </div>
-   </div>
-   <footer class="grid-x grid-margin-x">
-      <button type="button" id="submit" data-close class="cell small-12 medium-offset-4 medium-4 newCaseSubmitButton">Submit</button>
-   </footer>
+      <footer class="grid-x grid-margin-x">
+        <button type="button" class="cell small-12 medium-offset-4 medium-4 button tabBoxButtonSubmit">Filter</button>
+      </footer>
+    </form>
+  </div>
+  <div class="scrollContainer scrollY">
+    <table class="caseTable">
+      <thead>
+        <tr>
+          <th colspan="2">Subject</th>
+          <th>Type</th>
+          <th>Organisation</th>
+          <th>Created Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- case list -->
+      </tbody>
+    </table>
+  </div>
+  <footer>
+    <div class="legend">
+      <h6>Legend</h6>
+      <ul>
+        <li class="active">Open</li>
+        <li class="non-active">Closed</li>
+      </ul>
+    </div>
+  </footer>
+</section>
+<section id="userContainer">
+  <header class="grid-x">
+    <h2 class="cell auto">User(s)</h2>
+  </header>
+  <div id='userFilter' class="userFilter tabBoxContainer">
+    <button class="button button3 tabBoxButton" data-target="userFilterForm" ><i class="icon"><img src="{{root}}assets/img/icon-light-filter.png" alt="icon"/></i>Filter</button>
+    <form class="form2 tabBoxContent reveal" id="userFilterForm">
+      <button class="close-button tabBoxButtonClose" aria-label="Dismiss alert" type="button" data-close>
+      <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="grid-x grid-padding-x">
+        <div class="cell small-12 medium-6 orgCell">
+          <label>Name
+          <input type="text" id="name" name="name" />
+          </select>
+          </label>
+        </div>
+        <div class="cell small-12 medium-6">
+          <label>
+          NRIC/FIN
+          <input type="text" id="entityKey" name="entityKey" />
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="cell small-12 medium-6 orgCell">
+          <label>Contact No.
+          <input type="text" id="contactNo" name="contactNo" />
+          </select>
+          </label>
+        </div>
+        <div class="cell small-12 medium-6">
+          <label>
+          Email
+          <input type="text" id="email" name="email" />
+          </label>
+        </div>
+      </div>
+      <footer class="grid-x grid-margin-x">
+        <button type="button" class="cell small-12 medium-offset-4 medium-4 button tabBoxButtonSubmit">Filter</button>
+      </footer>
+    </form>
+  </div>
+  <div class="scrollContainer scrollY">
+    <table class="userTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>NRIC/FIN</th>
+          <th>Contact No.</th>
+          <th>Email</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- user list -->
+      </tbody>
+    </table>
+  </div>
+</section>
+<form id="caseAddForm" class="reveal medium lightBg" data-reveal >
+  <header onloadedmetadata=""class="grid-x grid-padding-x">
+    <h3 class="cell">New Case</h3>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+    </button>
+  </header>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+      Organisation <span style="color:red">*</span>
+      <select id="organisation" name="organisation">
+      </select>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+      Contact Person <span style="color:red">*</span>
+      <input type="text" id="name" name="name"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell small-12 medium-6">
+      <label>
+      Email <span style="color:red">*</span>
+      <input type="text" id="email" name="email"/>
+      </label>
+    </div>
+    <div class="cell small-12 medium-6">
+      <label>
+      Contact No. <span style="color:red">*</span>
+      <input type="text" id="contact" name="contact"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+      Subject <span style="color:red">*</span>
+      <input type="text" id="title" name="title"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+        Category
+        <select id="category" name="category">
+          <option value="">-- Please Select --</option>
+          <option value="Bugs">Bugs</option>
+          <option value="CR">Change Request</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+      Description <span style="color:red">*</span>
+      <textarea id="description" name="description"></textarea>
+      </label>
+    </div>
+  </div>
+  <footer class="grid-x grid-margin-x">
+    <button type="button" id="submit" data-close class="cell small-12 medium-offset-4 medium-4 newCaseSubmitButton">Submit</button>
+  </footer>
 </form>
-<!-- case add form end -->
+<form id="packageAddForm" class="reveal lightBg" data-reveal >
+  <header onloadedmetadata="" class="grid-x grid-padding-x">
+    <h3 class="cell">New Product</h3>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+    </button>
+  </header>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+      Organisation <span style="color:red">*</span>
+      <select id="organisation" name="organisation">
+      </select>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+      Product <span style="color:red">*</span>
+      <input type="text" id="product" name="product"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+        Package Type <span style="color:red">*</span>
+        <select id="type" name="type">
+          <option value="">-- Please Select --</option>
+          <option value="Maintenance">Maintenance</option>
+          <option value="Assurance">Assurance</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell small-12 medium-6">
+      <label>
+      Start Date <span style="color:red">*</span>
+      <input type="date" id="packageStartDate" name="packageStartDate" />
+      </label>
+    </div>
+    <div class="cell small-12 medium-6">
+      <label>
+      Expiry Date <span style="color:red">*</span>
+      <input type="date" id="packageExpiryDate" name="packageExpiryDate" />
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+        Assurance Plus
+        <input type="checkbox" id="assurancePlus" name="assurancePlus" />
+        <select id="number" name="number">
+          <option value="">-- Please Select --</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+      Remarks
+      <textarea id="remarks" name="remarks"></textarea>
+      </label>
+    </div>
+  </div>
+  <footer class="grid-x grid-margin-x">
+    <button type="button" id="submit" data-close class="cell small-12 medium-offset-4 medium-4 newPackagaSubmitButton">Submit</button>
+  </footer>
+</form>
+<form id="newUserForm" class="reveal lightBg" data-reveal >
+  <header onloadedmetadata="" class="grid-x grid-padding-x">
+    <h3 class="cell">New User</h3>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+    </button>
+  </header>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+      Name <span style="color:red">*</span>
+      <input type="text" id="name" name="name"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+      NRIC/FIN <span style="color:red">*</span>
+      <input type="text" id="entityKey" name="entityKey"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell small-12 medium-6">
+      <label>
+      Contact No. <span style="color:red">*</span>
+      <input type="text" id="contact" name="contact"/>
+      </label>
+    </div>
+    <div class="cell small-12 medium-6">
+      <label>
+      Email <span style="color:red">*</span>
+      <input type="text" id="email" name="email"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell small-12 medium-6">
+      <label>
+      Country
+      <input type="text" id="country" name="country"/>
+      </label>
+    </div>
+    <div class="cell small-12 medium-6">
+      <label>
+      Postal Code
+      <input type="text" id="postalCode" name="postalCode"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell small-12 medium-6">
+      <label>
+      City
+      <input type="text" id="city" name="city"/>
+      </label>
+    </div>
+    <div class="cell small-12 medium-6">
+      <label>
+      State
+      <input type="text" id="state" name="state"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell small-12 medium-6">
+      <label>
+      Block No.
+      <input type="text" id="blockNo" name="blockNo"/>
+      </label>
+    </div>
+    <div class="cell small-12 medium-6">
+      <label>
+      Street
+      <input type="text" id="street" name="street"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell small-12 medium-6">
+      <label>
+      Unit No.
+      <input type="text" id="unitNo" name="unitNo"/>
+      </label>
+    </div>
+    <div class="cell small-12 medium-6">
+      <label>
+      Building
+      <input type="text" id="building" name="building"/>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <label>
+        Role <span style="color:red">*</span>
+        <select id="role" name="role">
+          <option value="">-- Please Select --</option>
+          <option value="1">Customer</option>
+          <option value="2">Support Team Lead</option>
+          <option value="2">Support Team Developer</option>
+          <option value="2">Sales</option>
+          <option value="2">Admin</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div id="contactPoint">
+    <h3>Point of Contact 1</h3>
+    <div class="grid-x grid-padding-x">
+      <div class="cell"> <label for="poc1Name"> Name </label> <input type="text" id="poc1Name" /> </div>
+    </div>
+    <div class="grid-x grid-padding-x">
+      <div class="cell small-12 medium-6"> <label for="poc1Contact"> Contact No  </label> <input type="text" name="poc1Contact" id="poc1Contact" /> </div>
+      <div class="cell small-12 medium-6"> <label for="poc1Email"> Email </label> <input type="text" id="poc1Email" /> </div>
+    </div>
+    <div class="grid-x grid-padding-x">
+      <div class="cell small-12 medium-6"> <label for="poc1Designation"> Designation </label> <input type="text" id="poc1Designation" /> </div>
+      <div class="cell small-12 medium-6"> <label for="poc1Department"> Department </label> <input type="text" id="poc1Department" /> </div>
+    </div>
+    <h3>Point of Contact 2</h3>
+    <div class="grid-x grid-padding-x">
+      <div class="cell"> <label for="poc2Name"> Name </label> <input type="text" id="poc2Name" /> </div>
+    </div>
+    <div class="grid-x grid-padding-x">
+      <div class="cell small-12 medium-6"> <label for="poc2Contact"> Contact No  </label> <input type="text" id="poc2Contact" /> </div>
+      <div class="cell small-12 medium-6"> <label for="poc2Email"> Email </label> <input type="text" id="poc2Email" /> </div>
+    </div>
+    <div class="grid-x grid-padding-x">
+      <div class="cell small-12 medium-6"> <label for="poc2Designation"> Designation </label> <input type="text" id="poc2Designation" /> </div>
+      <div class="cell small-12 medium-6"> <label for="poc2Department"> Department </label> <input type="text" id="poc2Department" /> </div>
+    </div>
+  </div>
+  <footer class="grid-x grid-margin-x">
+    <button type="button" id="submit" data-close class="cell small-12 medium-offset-4 medium-4 newPackagaSubmitButton">Submit</button>
+  </footer>
+</form>

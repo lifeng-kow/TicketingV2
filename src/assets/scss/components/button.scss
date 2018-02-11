@@ -77,6 +77,30 @@ button, .button, [type="button"], [type="reset"], [type="submit"] {
 		width: 0;
 	}
 
+	&.buttonChargeAdd {
+		&.left:before,
+		&:after {
+			background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPqYBEEb_tlR9X9ZIyJISdT533IcGsQOPOz89bRJjNDu67zKUOCw') no-repeat center center;
+			background-size: 100% 100%;
+		}
+		&.left:hover:before,
+		&:hover:after {
+			background-color: lighten($contrast-color1,10%);
+		}
+	}
+
+	&.buttonReviewAdd {
+		&.left:before,
+		&:after {
+			background: url('https://image.freepik.com/free-icon/edit_318-48594.jpg') no-repeat center center;
+			background-size: 100% 100%;
+		}
+		&.left:hover:before,
+		&:hover:after {
+			background-color: lighten($contrast-color1,10%);
+		}
+	}
+
 	&.buttonType2Add {
 		&.left:before,
 		&:after {
