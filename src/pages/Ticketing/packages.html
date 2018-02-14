@@ -75,7 +75,7 @@
 <div class="grid-x grid-padding-x">
   <div class="cell">
     <label>
-      Organisation<span style="color:red">*</span>
+      Organisation <span style="color:red">*</span>
       <select id="organisation" name="organisation">
       </select>
     </label>
@@ -84,7 +84,15 @@
 <div class="grid-x grid-padding-x">
   <div class="cell">
     <label>
-      Package Type<span style="color:red">*</span>
+      Product <span style="color:red">*</span>
+      <input type="text" id="product" name="product"/>
+    </label>
+  </div>
+</div>
+<div class="grid-x grid-padding-x">
+  <div class="cell">
+    <label>
+      Package Type <span style="color:red">*</span>
       <select id="type" name="type">
         <option value="">-- Please Select --</option>
         <option value="Maintenance">Maintenance</option>
@@ -94,25 +102,28 @@
   </div>
 </div>
 <div class="grid-x grid-padding-x">
-  <div class="cell">
-    <label>
-      Product<span style="color:red">*</span>
-      <input type="text" id="product" name="product"/>
-    </label>
-  </div>
-</div>
-<div class="grid-x grid-padding-x">
   <div class="cell small-12 medium-6">
     <label>
-      Start Date<span style="color:red">*</span>
+      Start Date <span style="color:red">*</span>
       <input type="date" id="packageStartDate" name="packageStartDate" placeholder="Package Start Date" />
     </label>
   </div>
   <div class="cell small-12 medium-6">
     <label>
-      Expiry Date<span style="color:red">*</span>
+      Expiry Date <span style="color:red">*</span>
     <input type="date" id="packageExpiryDate" name="packageExpiryDate" placeholder="Package Expiry Date" />
     </label>
+  </div>
+</div>
+<div class="grid-x grid-padding-x">
+  <div class="cell small-12 medium-4">
+    <label>
+      Assurance Plus
+      <input type="checkbox" id="assurancePlus" name="assurancePlus"/>
+    </label>
+  </div>
+  <div class="cell small-12 medium-2">
+      <input type="text" style="display: none" id="assurancePlusNo" name="assurancePlusNo"/>
   </div>
 </div>
 <div class="grid-x grid-padding-x">

@@ -24,18 +24,18 @@
         <span class="product">
         </span>
       </div>
-      <div class="cell small-12 medium-6 "><b>Package Type</b>
-        <span class="packageType">
-        </span>
-      </div>
-    </div>
-    <div class="grid-x grid-margin-x">
       <div class="cell small-12 medium-6 "><b>Status</b>
         <span class="status">
         </span>
       </div>
-      <div class="cell small-12 medium-6 "><b>Man-Day(s)</b>
-        <span class="manDays">
+    </div>
+    <div class="grid-x grid-margin-x">
+      <div class="cell small-12 medium-6 "><b>Package</b>
+        <span class="packageType">
+        </span>
+      </div>
+      <div class="cell small-12 medium-6 "><b>Assurance Plus</b>
+        <span class="assurancePlusLbl">
         </span>
       </div>
     </div>
@@ -74,12 +74,10 @@
     <table class="packagetranTable">
       <thead>
         <tr>
-          <th>Transaction Type</th>
-          <th>Day(s)</th>
           <th>Transaction Date</th>
-          <th>Added by</th>
+          <th>By</th>
+          <th>Hour(s)</th>
           <th>Remarks</th>
-          <th>Case ID</th>
         </tr>
       </thead>
       <tbody>
@@ -107,11 +105,22 @@
       </label>
     </div>
   </div>
-  <div class="grid-x grid-padding-x">
+  <div style="display: none" class="grid-x grid-padding-x assurancePlusDiv">
+    <div class="cell small-12 medium-4">
+      <label>
+        Assurance Plus
+        <input type="checkbox" id="assurancePlus" name="assurancePlus"/>
+      </label>
+    </div>
+    <div class="cell small-12 medium-2">
+        <input type="text" style="display: none" id="assurancePlusNo" name="assurancePlusNo"/>
+    </div>
+  </div>
+  <div  style="display: none" class="grid-x grid-padding-x hoursDiv">
     <div class="cell">
       <label>
-        Man-Day(s)<span style="color:red">*</span>
-        <input type="text" id="days" name="days"/>
+        Hour(s)<span style="color:red">*</span>
+        <input type="text" id="hours" name="hours"/>
       </label>
     </div>
   </div>

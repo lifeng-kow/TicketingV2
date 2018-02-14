@@ -2,8 +2,37 @@ var access=false;
 
 $(function(){
 
+  $("#packageTransactionAddForm #assurancePlus").change(function(){
+    if ($("#packageTransactionAddForm #assurancePlus").is(':checked')){
+      $("#packageTransactionAddForm #assurancePlusNo").show();
+    }else{
+      $("#packageTransactionAddForm #assurancePlusNo").hide();
+    }
+  });
+
+  $("#packageTransactionAddForm #tranType").change(function(){
+    if ($("#packageTransactionAddForm #tranType").val()=='Debit'){
+      $("#packageTransactionAddForm .hoursDiv").show();
+      $("#packageTransactionAddForm #assurancePlusNo").val("");
+      $("#packageTransactionAddForm #assurancePlus").prop('checked', false);
+      $("#packageTransactionAddForm #assurancePlusNo").hide();
+      $("#packageTransactionAddForm .assurancePlusDiv").hide();
+    }else if ($("#packageTransactionAddForm #tranType").val()=='Credit'){
+      $("#packageTransactionAddForm .assurancePlusDiv").show();
+      $("#packageTransactionAddForm #hours").val("");
+      $("#packageTransactionAddForm .hoursDiv").hide();
+    }else{
+      $("#packageTransactionAddForm #hours").val("");
+      $("#packageTransactionAddForm #assurancePlusNo").val("");
+      $("#packageTransactionAddForm #assurancePlus").prop('checked', false);
+      $("#packageTransactionAddForm #assurancePlusNo").hide();
+      $("#packageTransactionAddForm .hoursDiv").hide();
+      $("#packageTransactionAddForm .assurancePlusDiv").hide();
+    }
+  });
+
   //get packageID from url
-  var urlParams = new URLSearchParams(window.location.search),
+  /*var urlParams = new URLSearchParams(window.location.search),
       packageID = urlParams.get('packageID');
 
   var checkAccess =
@@ -38,7 +67,7 @@ $(function(){
   //add transaction
   $('#packageTransactionAddForm #submit').click(function(){
     addNewtransaction(packageID, '');
-  });
+  });*/
 });
 
 function addNewtransaction(PackageID, CaseID){

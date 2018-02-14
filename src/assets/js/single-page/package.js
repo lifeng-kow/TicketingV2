@@ -1,9 +1,16 @@
 
 $(function(){
 
+  $("#packageAddForm #assurancePlus").change(function(){
+    if ($("#packageAddForm #assurancePlus").is(':checked')){
+      $("#packageAddForm #assurancePlusNo").show();
+    }else{
+      $("#packageAddForm #assurancePlusNo").hide();
+    }
+  });
 
   //get packageID from url
-  var urlParams = new URLSearchParams(window.location.search),
+  /*var urlParams = new URLSearchParams(window.location.search),
       packageID = urlParams.get('packageID');
 
   getOrgnaisationList();
@@ -21,7 +28,7 @@ $(function(){
   //add package
   $('#packageAddForm #submit').click(function(){
     addNewPackage();
-  });
+  });*/
 });
 
 function addNewPackage(){
