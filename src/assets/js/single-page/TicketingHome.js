@@ -13,10 +13,10 @@ $(function(){
 
   $("#packageAddForm #assurancePlus").change(function(){
     if ($("#packageAddForm #assurancePlus").is(':checked')){
-      $("#packageAddForm #number").show();
+      $("#packageAddForm #assurancePlusNo").show();
     }else{
-      $("#packageAddForm #number").val("");
-      $("#packageAddForm #number").hide();
+      $("#packageAddForm #assurancePlusNo").val("");
+      $("#packageAddForm #assurancePlusNo").hide();
     }
   });
 

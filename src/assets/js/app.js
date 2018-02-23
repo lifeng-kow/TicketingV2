@@ -51,7 +51,7 @@ $(function(){
     window.location.href = appRootPath +'login.html';
   }
 
-  checkAccess();
+  //checkAccess();
   if(appCookie.loginID){
     GetBasicInformation(appCookie.personID);
   }

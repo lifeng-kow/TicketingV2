@@ -6,6 +6,32 @@
     </b>
   </div>
 </section>
+<section id="packageContainer">
+  <header class="grid-x">
+    <h2 class="cell auto">Product Owned</h2>
+  </header>
+    <div class="scrollContainer scrollY">
+      <table class="packageTable">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Package Type</th>
+            <th>Expiry Date</th>
+            <th>Assurance Plus</th>
+            <th>Utilized Man-hour(s)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <td>Charitas</td>
+          <td>Software Basic Maitenance</td>
+          <td>31/12/2018</td>
+          <td>4</td>
+          <td>16</td>
+        </tbody>
+      </table>
+    </div><!-- scroll container end -->
+</section><!-- packagaeContainer end -->
+<!--
 <section id="packages" class="toggleBox">
   <header class="toggleTitle">
     <h2>Product Owned</h2>
@@ -30,6 +56,7 @@
     </div>
   </div>
 </section>
+-->
 <section id="administartion" class="toggleBox">
   <header class="toggleTitle">
     <h2>Administartion</h2>
@@ -121,6 +148,12 @@
         </tr>
       </thead>
       <tbody>
+        <td class="colorCodeActive"></td>
+        <td>test</td>
+        <td>bugs</td>
+        <td>HCA</td>
+        <td>12 Dec 2017</td>
+        <td>Open</td>
         <!-- case list -->
       </tbody>
     </table>
@@ -135,6 +168,7 @@
     </div>
   </footer>
 </section>
+
 <section id="userContainer">
   <header class="grid-x">
     <h2 class="cell auto">User(s)</h2>
@@ -179,7 +213,7 @@
     </form>
   </div>
   <div class="scrollContainer scrollY">
-    <table class="userTable">
+    <table class="packageTable">
       <thead>
         <tr>
           <th>Name</th>
@@ -190,10 +224,14 @@
         </tr>
       </thead>
       <tbody>
-        <!-- user list -->
+        <td>HCA</td>
+        <td>G1391888W</td>
+        <td>12345678</td>
+        <td>hca@hca.com</td>
+        <td>123, Tan tock Seng, Singapore 310098</td>
       </tbody>
     </table>
-  </div>
+  </div><!-- scroll container end -->
 </section>
 <form id="caseAddForm" class="reveal medium lightBg" data-reveal >
   <header onloadedmetadata=""class="grid-x grid-padding-x">
@@ -316,16 +354,14 @@
     </div>
   </div>
   <div class="grid-x grid-padding-x">
-    <div class="cell">
+    <div class="cell small-12 medium-4">
       <label>
         Assurance Plus
         <input type="checkbox" id="assurancePlus" name="assurancePlus" />
-        <select id="number" name="number" style='display:none'>
-          <option value="">-- Please Select --</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
       </label>
+    </div>
+    <div class="cell small-12 medium-2">
+        <input type="text" style="display: none" id="assurancePlusNo" name="assurancePlusNo"/>
     </div>
   </div>
   <div class="grid-x grid-padding-x">

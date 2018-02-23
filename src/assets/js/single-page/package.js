@@ -5,6 +5,7 @@ $(function(){
     if ($("#packageAddForm #assurancePlus").is(':checked')){
       $("#packageAddForm #assurancePlusNo").show();
     }else{
+      $("#packageAddForm #assurancePlusNo").val("");
       $("#packageAddForm #assurancePlusNo").hide();
     }
   });
