@@ -1,6 +1,25 @@
 var access=false;
 
 $(function(){
+
+  $("#newUserForm #role").change(function(){
+    console.log(1);
+    if ($("#newUserForm #role").val()=='Customer'){
+      $("#newUserForm #contactPoint").show();
+    }else{
+      $("#newUserForm #contactPoint").hide();
+    }
+  });
+
+  $("#packageAddForm #assurancePlus").change(function(){
+    if ($("#packageAddForm #assurancePlus").is(':checked')){
+      $("#packageAddForm #number").show();
+    }else{
+      $("#packageAddForm #number").val("");
+      $("#packageAddForm #number").hide();
+    }
+  });
+
   /*var checkAccess =
     $.ajax({
       url: apiSrc+"BCMain/iCtc1.CheckIsAdmin.json",

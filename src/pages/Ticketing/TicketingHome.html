@@ -320,7 +320,7 @@
       <label>
         Assurance Plus
         <input type="checkbox" id="assurancePlus" name="assurancePlus" />
-        <select id="number" name="number">
+        <select id="number" name="number" style='display:none'>
           <option value="">-- Please Select --</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -439,16 +439,16 @@
         Role <span style="color:red">*</span>
         <select id="role" name="role">
           <option value="">-- Please Select --</option>
-          <option value="1">Customer</option>
-          <option value="2">Support Team Lead</option>
-          <option value="2">Support Team Developer</option>
-          <option value="2">Sales</option>
-          <option value="2">Admin</option>
+          <option value="Customer">Customer</option>
+          <option value="Support Team Lead">Support Team Lead</option>
+          <option value="Support Team Developer">Support Team Developer</option>
+          <option value="Sales">Sales</option>
+          <option value="Admin">Admin</option>
         </select>
       </label>
     </div>
   </div>
-  <div id="contactPoint">
+  <div id="contactPoint" style='display:none'>
     <h3>Point of Contact 1</h3>
     <div class="grid-x grid-padding-x">
       <div class="cell"> <label for="poc1Name"> Name </label> <input type="text" id="poc1Name" /> </div>
