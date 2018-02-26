@@ -80,7 +80,7 @@ button, .button, [type="button"], [type="reset"], [type="submit"] {
 	&.buttonChargeAdd {
 		&.left:before,
 		&:after {
-			background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPqYBEEb_tlR9X9ZIyJISdT533IcGsQOPOz89bRJjNDu67zKUOCw') no-repeat center center;
+			background: url('/assets/img/case-charge.png') no-repeat center center;
 			background-size: 100% 100%;
 		}
 		&.left:hover:before,
@@ -92,7 +92,7 @@ button, .button, [type="button"], [type="reset"], [type="submit"] {
 	&.buttonReviewAdd {
 		&.left:before,
 		&:after {
-			background: url('https://image.freepik.com/free-icon/edit_318-48594.jpg') no-repeat center center;
+			background: url('/assets/img/case-review.jpg') no-repeat center center;
 			background-size: 100% 100%;
 		}
 		&.left:hover:before,
@@ -104,7 +104,7 @@ button, .button, [type="button"], [type="reset"], [type="submit"] {
 	&.buttonType2Add {
 		&.left:before,
 		&:after {
-			background: $contrast-color1 url('https://portal.taksys.com.sg/Support/assets/img/icon-light-add.png') no-repeat center center;
+			background: $contrast-color1 url('/assets/img/icon-light-add.png') no-repeat center center;
 		}
 		&.left:hover:before,
 		&:hover:after {
@@ -115,7 +115,7 @@ button, .button, [type="button"], [type="reset"], [type="submit"] {
 	&.buttonType2Back {
 		&.left:before,
 		&:after {
-			background: url('https://portal.taksys.com.sg/Support/assets/img/icon-dark-back.png') no-repeat center center;
+			background: url('/assets/img/icon-dark-back.png') no-repeat center center;
 		}
 		&.left:hover:before,
 		&:hover:after {
