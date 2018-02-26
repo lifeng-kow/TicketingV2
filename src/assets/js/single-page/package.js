@@ -11,11 +11,11 @@ $(function(){
   });
 
   //get packageID from url
-  /*var urlParams = new URLSearchParams(window.location.search),
-      packageID = urlParams.get('packageID');
+  //var urlParams = new URLSearchParams(window.location.search),
+    //  packageID = urlParams.get('packageID');
 
-  getOrgnaisationList();
-  getProductList();
+  //getOrgnaisationList();
+  //getProductList();
   getPackageList();
 
   $("#packageFilter #organisation").change(function(){
@@ -23,22 +23,28 @@ $(function(){
   });
 
   //filter
-  $('#packageFilter .tabBoxButtonSubmit').click(function(){
+  $('#packageFilterForm .packageFilterSubmit').click(function(){
     getPackageList();
   });
   //add package
   $('#packageAddForm #submit').click(function(){
     addNewPackage();
-  });*/
+  });
 });
 
 function addNewPackage(){
-  var RoleID, PackageType, Product, StartDate, ExpiryDate, Remarks;
+  var RoleID, PackageType, Product, StartDate, ExpiryDate, AssurancePlus, NoAssPlus, Remarks;
   RoleID = $('#packageAddForm #organisation').val();
   PackageType =  $('#packageAddForm #type').val();
   Product = $('#packageAddForm #product').val();
   StartDate = $('#packageAddForm #packageStartDate').val();
   ExpiryDate = $('#packageAddForm #packageExpiryDate').val();
+  if ($("#packageAddForm #assurancePlus").is(':checked')){
+    AssurancePlus = 1;
+  }else{
+    AssurancePlus = 0;
+  }
+  NoAssPlus = $('#packageAddForm #assurancePlusNo').val();
   Remarks = $('#packageAddForm #remarks').val();
 
   if (RoleID.length==0 || PackageType.length==0 || Product.length==0 || StartDate.length==0 || ExpiryDate.length==0){
@@ -46,7 +52,7 @@ function addNewPackage(){
     return false;
   }
 
-  var data = {'RoleID':RoleID, 'PackageType':PackageType, 'Product':Product, 'StartDate':StartDate, 'ExpiryDate':ExpiryDate, 'Remarks':Remarks};
+  var data = {'RoleID':RoleID, 'PackageType':PackageType, 'Product':Product, 'StartDate':StartDate, 'ExpiryDate':ExpiryDate, 'Remarks':Remarks, 'AssurancePlus':AssurancePlus, 'NoAssPlus':NoAssPlus};
   $.ajax({
     url: apiSrc+"BCMain/Ctc1.AddNewPackage.json",
     method: "POST",
