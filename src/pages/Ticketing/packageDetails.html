@@ -118,7 +118,7 @@
     </button>
   </header>
   <div class="grid-x grid-padding-x">
-    <div class="cell">
+    <div class="cell small-12 medium-6">
       <label>
         Transaction Type<span style="color:red">*</span>
         <select id="tranType" name="tranType">
@@ -128,26 +128,26 @@
         </select>
       </label>
     </div>
-  </div>
-  <div style="display: none" class="grid-x grid-padding-x assurancePlusDiv">
-    <div class="cell small-12 medium-4">
-      <label>
-        Assurance Plus
-        <input type="checkbox" id="assurancePlus" name="assurancePlus"/>
-      </label>
+    <div class="cell small-12 medium-6">
+      <div style="display: none" class="grid-x grid-padding-x assurancePlusDiv">
+        <div class="cell">
+          <label>
+            Assurance Plus <span style="color:red">*</span>
+            <input type="text" id="assurancePlusNo" name="assurancePlusNo"/>
+          </label>
+        </div>
+      </div>
+      <div  style="display: none" class="grid-x grid-padding-x hoursDiv">
+        <div class="cell">
+          <label>
+            Hour(s) <span style="color:red">*</span>
+            <input type="text" id="hours" name="hours"/>
+          </label>
+        </div>
+      </div>
     </div>
-    <div class="cell small-12 medium-2">
-        <input type="text" style="display: none" id="assurancePlusNo" name="assurancePlusNo"/>
-    </div>
   </div>
-  <div  style="display: none" class="grid-x grid-padding-x hoursDiv">
-    <div class="cell">
-      <label>
-        Hour(s)<span style="color:red">*</span>
-        <input type="text" id="hours" name="hours"/>
-      </label>
-    </div>
-  </div>
+
   <div class="grid-x grid-padding-x">
     <div class="cell">
       <label>
