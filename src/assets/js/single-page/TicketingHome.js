@@ -20,6 +20,8 @@ $(function(){
     }
   });
 
+  getProductOwn();
+
   /*var checkAccess =
     $.ajax({
       url: apiSrc+"BCMain/iCtc1.CheckIsAdmin.json",
@@ -62,7 +64,6 @@ function getCasesList(){
 
   var Organization, Status, DateFrom, DateTo;
   Organization = $('#caseFilter #organisation').val();
-  console.log(Organization);
   Status = $('#caseFilter #status').val();
   DateFrom = $('#caseFilter #dateCreatedFrom').val();
   DateTo = $('#caseFilter #dateCreatedTo').val();
@@ -168,12 +169,15 @@ function createNewCase(){
   });
 };
 
+function getProductOwn(){
+  var productContainerTable = $('#packageContainer').find('table'),
+      productThead = productContainerTable.find('thead'),
+      productTbody = productContainerTable.find('tbody');
 
+  productTbody.html('');
 
-
-function getCurrentPackageList(){
   $.ajax({
-    url: apiSrc+"BCMain/Ctc1.GetCurrentPackages.json",
+    url: apiSrc+"BCMain/Ctc1.GetProductOwn.json",
     method: "POST",
     dataType: "json",
     xhrFields: {withCredentials: true},
@@ -183,19 +187,24 @@ function getCurrentPackageList(){
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
-          var packages = data.d.RetData.Tbl.Rows;
+          var products = data.d.RetData.Tbl.Rows;
           var htmlString = '';
-          for (var i=0; i<packages.length; i++ ){
-            var date = convertDateTime(packages[i].ExpiryDate,'date');
-            htmlString += '<div class="medium-6 large-4 cell clearfix"> <a href="./packageDetails.html?packageID='+packages[i].PackageID+'"> <div class="card"> <div class="grid-x card-divider"> <div class="cell auto"> <h3>'+packages[i].Product+'</h3>'
-            htmlString +=	'</div>'
-            if (packages[i].ManDaysLeft > 0) {
-              htmlString += '<div class="manDays cell small-5"> <div class="grid-y" style="height: 60px;"> <div class="cell small-9"><b>'+packages[i].ManDaysLeft+'</b>/<span class="totalDays">'+packages[i].ManDaysBought+'</span></div> <small class="cell small-3">Man-day(s)</small> </div> </div>'
-            }
-            htmlString += '</div><!--card-divider--> <div class="card-section"> <div class="packageType">'+packages[i].PackageType+'</div> <div class="expiring">Expiring: <i>'+date+'</i></div> </div> </div> </a> </div>'
+          for (var i=0; i<products.length; i++ ){
+            var expiryDate=convertDateTime(products[i].ExpiryDate,'date');
+            htmlString += '<tr id="'+ products[i].PackageID +'" data-open="caseAddForm">';
+            htmlString += '<td>'+products[i].Product+'</td>';
+            htmlString += '<td>'+products[i].PackageType+'</td>';
+            htmlString += '<td>'+expiryDate+'</td>';
+            htmlString += '<td>'+products[i].AssuranceNo+'</td>';
+            htmlString += '<td>'+products[i].ManHoursUsed+'</td>';
+            htmlString += '</tr>';
           }
-          $('.packageGrid').append(htmlString);
         }
+        productTbody.html(htmlString);
+        $('.packageTable tbody tr').click(function(){
+          var packageId = $(this).attr('id');
+          $('#caseAddForm #product').val(packageId);
+        });
       }
     }
   });
