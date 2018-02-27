@@ -101,7 +101,14 @@ function getPackageList(){
           for (var i=0; i<packages.length; i++ ){
             var startDate = convertDateTime(packages[i].StartDate,'date');
             var expiryDate = convertDateTime(packages[i].ExpiryDate,'date');
-            htmlString += '<tr id="'+ packages[i].PackageID  +'"> <td>'+packages[i].Organization+'</td> <td>'+packages[i].PackageType+'</td> <td>'+packages[i].Product+'</td> <td>'+packages[i].ManDaysLeft+'/'+packages[i].ManDaysBought+'</td> <td>'+startDate+'</td> <td>'+expiryDate+'</td> <td>'+packages[i].Status+'</td> </tr>';
+            var asp = packages[i].AssurancePlus;
+            var assuranceYesNo;
+            if (asp=1){
+              assuranceYesNo = 'Yes';
+            }else{
+              assuranceYesNo = 'No';
+            }
+            htmlString += '<tr id="'+ packages[i].PackageID  +'"> <td>'+packages[i].Organization+'</td> <td>'+packages[i].PackageType+'</td> <td>'+packages[i].Product+'</td> <td>'+assuranceYesNo+'</td> <td>'+startDate+'</td> <td>'+expiryDate+'</td> <td>'+packages[i].Status+'</td> </tr>';
           }
           $('.packageTable tbody').html(htmlString);
           $('.packageTable tbody tr').click(function(){
