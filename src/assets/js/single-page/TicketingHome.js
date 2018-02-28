@@ -20,7 +20,52 @@ $(function(){
     }
   });
 
-  getProductOwn();
+  var getOrgnaisation =
+  $.ajax({
+    url: apiSrc+"BCMain/iCtc1.getOrgnaisationList.json",
+    method: "POST",
+    dataType: "json",
+    xhrFields: {withCredentials: true},
+    data: { 'data':JSON.stringify({}),
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
+    success: function(data){
+      if ((data) && (data.d.RetVal === -1)) {
+        if (data.d.RetData.Tbl.Rows.length == 1) {
+          var org = data.d.RetData.Tbl.Rows[0];
+          $('#caseAddForm #organisation, #caseFilter #organisation, #packageAddForm #organisation').append('<option value="'+org.DefaultRoleID+'" selected>'+org.DisplayName+'</option>');
+        }else if (data.d.RetData.Tbl.Rows.length > 0) {
+          $('#caseAddForm #organisation, #caseFilter #organisation, #packageAddForm #organisation').append('<option value="">-- Please Select --</option>');
+          var orgList = data.d.RetData.Tbl.Rows;
+          for (var i=0; i<orgList.length; i++ ){
+            $('#caseAddForm #organisation, #caseFilter #organisation, #packageAddForm #organisation').append('<option value="'+orgList[i].DefaultRoleID+'">'+orgList[i].DisplayName+'</option>');
+          }
+        }
+      }
+    }
+  });
+
+  var getProductList =
+  $.ajax({
+    url: apiSrc+"BCMain/iCtc1.getProductList.json",
+    method: "POST",
+    dataType: "json",
+    xhrFields: {withCredentials: true},
+    data: { 'data':JSON.stringify({}),
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
+    success: function(data){
+      if ((data) && (data.d.RetVal === -1)) {
+        if (data.d.RetData.Tbl.Rows.length > 0) {
+          $('#caseAddForm #product').append('<option value="">-- Please Select --</option>');
+          var productList = data.d.RetData.Tbl.Rows;
+          for (var i=0; i<productList.length; i++ ){
+            $('#caseAddForm #product').append('<option value="'+productList[i].Product+'">'+productList[i].Product+'</option>');
+          }
+        }
+      }
+    }
+  });
 
   /*var checkAccess =
     $.ajax({
@@ -39,20 +84,23 @@ $(function(){
         }
       }
     });
+    */
 
-  //GetDropdownList('#caseAddForm #module, #caseFilter #module', 'module');
-  $.when(getOrgnaisationList(),checkAccess).then(function( x ) {
-    getCurrentPackageList();
+  getProductOwn();
+  $.when(getOrgnaisation).then(function( x ) {
     getCasesList();
   });
 
   //Add New Case
-  $('#caseAddForm .newCaseSubmitButton').click(function(){
+  $('#caseAddForm #submit').click(function(){
     createNewCase();
   });
   $('#caseFilter .tabBoxButtonSubmit').click(function(){
     getCasesList();
-  });*/
+  });
+  $('#packageAddForm #submit').click(function(){
+    addNewPackage();
+  });
 
 });
 
@@ -70,7 +118,7 @@ function getCasesList(){
 
   var data = {'Organization':Organization, 'Status':Status, 'DateFrom':DateFrom, 'DateTo': DateTo};
   if (access==false){
-    caseThead.html('<tr><th colspan="2">Subject</th><th>Type</th><th>Created Date</th><th>Status</th></tr>');
+    //caseThead.html('<tr><th colspan="2">Subject</th><th>Type</th><th>Created Date</th><th>Status</th></tr>');
   }
   caseTbody.html('');
   $.ajax({
@@ -88,7 +136,20 @@ function getCasesList(){
           var htmlString = '';
           for (var i=0; i<cases.length; i++ ){
             var createdDate = convertDateTime(cases[i].CreatedDate,'date');
-            if (access==false){
+            htmlString += '<tr id="'+ cases[i].FLID +'">';
+            //color code
+            /*if (cases[i].Status=='Open'){
+              htmlString += '<td class="colorCodeActive"></td>';
+            }else{
+              htmlString += '<td class="colorCodeNonActive"></td>';
+            }*/
+            htmlString += '<td class="colorCodeActive"></td>';
+            htmlString += '<td>'+cases[i].Subject+'</td>';
+            htmlString += '<td>'+cases[i].Category+'</td>';
+            htmlString += '<td>'+cases[i].DisplayName+'</td>';
+            htmlString += '<td>'+createdDate+'</td>';
+            htmlString += '<td><span class="statusNew">'+cases[i].Status+'</span></td> </tr>';
+            /*if (access==false){
               htmlString += '<tr id="'+ cases[i].CaseID +'">';
               //color code
               if (cases[i].Status=='Open'){
@@ -106,7 +167,7 @@ function getCasesList(){
                 htmlString += '<td class="colorCodeNonActive"></td>';
               }
               htmlString += '<td>'+cases[i].Title+'</td> <td>'+cases[i].Category+'</td> <td>'+cases[i].DisplayName+'</td> <td>'+createdDate+'</td> <td><span class="statusNew">'+cases[i].Status+'</span></td> </tr>';
-            }
+            }*/
           }
           caseTbody.html(htmlString);
           $('.caseTable tbody tr').click(function(){
@@ -122,16 +183,17 @@ function getCasesList(){
 
 //Create new case
 function createNewCase(){
-  var Organization, Name, Email, Contact, Title, Details, Category;
+  var Organization, ContactPerson, Email, Contact, Subject, Product, Category, Details;
   Organization = $('#caseAddForm #organisation').val();
-  Name = $('#caseAddForm #name').val();
+  ContactPerson = $('#caseAddForm #name').val();
   Email = $('#caseAddForm #email').val();
   Contact = $('#caseAddForm #contact').val();
-  Title = $('#caseAddForm #title').val();
-  Details = $('#caseAddForm #description').val();
+  Subject = $('#caseAddForm #title').val();
+  Product = $('#caseAddForm #product').val();
   Category = $('#caseAddForm #category').val();
+  Details = $('#caseAddForm #description').val();
 
-  if (Organization.length==0 || Name.length==0 || Email.length==0 || Contact.length==0 || Title.length==0 || Details.length==0){
+  if (Organization.length==0 || ContactPerson.length==0 || Email.length==0 || Contact.length==0 || Subject.length==0 || Details.length==0){
     alert('Please fill in all mandatory fields!');
     return false;
   }
@@ -144,7 +206,7 @@ function createNewCase(){
     return false;
   }
 
-  var data = {'Organization':Organization, 'Name':Name, 'Email':Email, 'Contact': Contact, 'Title': Title, 'Details':Details, 'Category':Category};
+  var data = {'Organization':Organization, 'ContactPerson':ContactPerson, 'Email':Email, 'ContactNo': Contact, 'Subject': Subject, 'Category':Category, 'Details':Details, 'Product':Product};
   $.ajax({
     url: apiSrc+"BCMain/FL1.AddNewCase.json",
     method: "POST",
@@ -157,9 +219,10 @@ function createNewCase(){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
           if (data.d.RetData.Tbl.Rows[0].Success == true) {
-            console.log('123')
             getCasesList();
-          } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
+          } else {
+            alert(data.d.RetData.Tbl.Rows[0].ReturnMsg);
+          }
         }
       }
       else {
@@ -191,7 +254,7 @@ function getProductOwn(){
           var htmlString = '';
           for (var i=0; i<products.length; i++ ){
             var expiryDate=convertDateTime(products[i].ExpiryDate,'date');
-            htmlString += '<tr id="'+ products[i].PackageID +'" data-open="caseAddForm">';
+            htmlString += '<tr id="'+ products[i].Product +'" data-open="caseAddForm">';
             htmlString += '<td>'+products[i].Product+'</td>';
             htmlString += '<td>'+products[i].PackageType+'</td>';
             htmlString += '<td>'+expiryDate+'</td>';
@@ -202,18 +265,37 @@ function getProductOwn(){
         }
         productTbody.html(htmlString);
         $('.packageTable tbody tr').click(function(){
-          var packageId = $(this).attr('id');
-          $('#caseAddForm #product').val(packageId);
+          var Product = $(this).attr('id');
+          $('#caseAddForm #product').val(Product);
         });
       }
     }
   });
 };
 
-function getOrgnaisationList(){
-  var data = {};
+function addNewPackage(){
+  var RoleID, PackageType, Product, StartDate, ExpiryDate, AssurancePlus, NoAssPlus, Remarks;
+  RoleID = $('#packageAddForm #organisation').val();
+  Product = $('#packageAddForm #product').val();
+  PackageType =  $('#packageAddForm #type').val();
+  StartDate = $('#packageAddForm #packageStartDate').val();
+  ExpiryDate = $('#packageAddForm #packageExpiryDate').val();
+  if ($("#packageAddForm #assurancePlus").is(':checked')){
+    AssurancePlus = 1;
+  }else{
+    AssurancePlus = 0;
+  }
+  NoAssPlus = $('#packageAddForm #assurancePlusNo').val();
+  Remarks = $('#packageAddForm #remarks').val();
+
+  if (RoleID.length==0 || PackageType.length==0 || Product.length==0 || StartDate.length==0 || ExpiryDate.length==0){
+    alert('Please fill in all mandatory fields!');
+    return false;
+  }
+
+  var data = {'RoleID':RoleID, 'PackageType':PackageType, 'Product':Product, 'StartDate':StartDate, 'ExpiryDate':ExpiryDate, 'Remarks':Remarks, 'AssurancePlus':AssurancePlus, 'NoAssPlus':NoAssPlus};
   $.ajax({
-    url: apiSrc+"BCMain/iCtc1.getOrgnaisationList.json",
+    url: apiSrc+"BCMain/Ctc1.AddNewPackage.json",
     method: "POST",
     dataType: "json",
     xhrFields: {withCredentials: true},
@@ -222,16 +304,14 @@ function getOrgnaisationList(){
             'ReqGUID': getGUID() },
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
-        if (data.d.RetData.Tbl.Rows.length == 1) {
-          var org = data.d.RetData.Tbl.Rows[0];
-          $('#caseAddForm #organisation, #caseFilter #organisation').append('<option value="'+org.DefaultRoleID+'" selected>'+org.DisplayName+'</option>');
-        }else if (data.d.RetData.Tbl.Rows.length > 0) {
-          $('#caseAddForm #organisation, #caseFilter #organisation').append('<option value="">-- Please Select --</option>');
-          var orgList = data.d.RetData.Tbl.Rows;
-          for (var i=0; i<orgList.length; i++ ){
-            $('#caseAddForm #organisation, #caseFilter #organisation').append('<option value="'+orgList[i].DefaultRoleID+'">'+orgList[i].DisplayName+'</option>');
-          }
+        if (data.d.RetData.Tbl.Rows.length > 0) {
+          if (data.d.RetData.Tbl.Rows[0].Success == true) {
+            alert('Package added successfully!');
+          } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
         }
+      }
+      else {
+        alert(data.d.RetMsg);
       }
     }
   });
@@ -261,33 +341,6 @@ function convertDateTime(inputFormat, type) {
   }else if (type == 'time'){
     return [pad(d.getHours()), pad(d.getMinutes()), pad(d.getSeconds())].join(':');
   }
-};
-
-//generate drop down optioms
-function GetDropdownList(id, category) {
-  var data = {'LookupCat': category}
-  $.ajax({
-    url: apiSrc+"BCMain/iCtc1.Lookup_Get.json",
-    method: "POST",
-    dataType: "json",
-    xhrFields: {withCredentials: true},
-    data: { 'data': JSON.stringify(data),
-            'WebPartKey':WebPartVal,
-            'ReqGUID': getGUID() },
-    success: function(data){
-      if ((data) && (data.d.RetVal === -1)) {
-        if (data.d.RetData.Tbl.Rows.length > 0) {
-          var lookup = data.d.RetData.Tbl.Rows;
-          for (var i=0; i<lookup.length; i++ ){
-            $(id).append('<option value="'+lookup[i].LookupKey+'">'+lookup[i].Description+'</option>');
-          }
-        }
-      }
-      else {
-        alert(data.d.RetMsg);
-      }
-    }
-  });
 };
 
 function getGUID() {
