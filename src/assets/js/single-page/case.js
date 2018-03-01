@@ -5,6 +5,8 @@ $(function(){
   var urlParams = new URLSearchParams(window.location.search),
       caseID = urlParams.get('caseID');
 
+  getStaffList();
+  GetAvailablePackage(caseID);
   GetCaseDetails(caseID);
   GetCaseHistory(caseID);
   GetCaseInvolvement(caseID);
@@ -17,7 +19,49 @@ $(function(){
     addNewInvolvement(caseID);
   });
 
+  $('#reviewForm #submit').click(function(){
+    reviewCase(caseID);
+  });
+
+  $('#chargeForm #submit').click(function(){
+    chargeToPackage(caseID);
+  });
+
 });
+
+function reviewCase(caseID){
+  var status, category, dateFrom, dateTo, manHours, actualHour;
+  status = $('#reviewForm #status').val();
+  category = $('#reviewForm #category').val();
+  dateFrom = $('#reviewForm #scheduleDateFrom').val();
+  dateTo = $('#reviewForm #scheduleDateTo').val();
+  manHours = $('#reviewForm #manHours').val();
+  actualHour = $('#reviewForm #actualManHours').val();
+
+  var data = {'FLID':caseID, 'Status':status, 'Category':category, 'ChargeHours':manHours, 'ActualHours':actualHour, 'TargetStartDate':dateFrom, 'TargetEndDate':dateTo};
+  $.ajax({
+    url: apiSrc+"BCMain/FL1.ReviewCase.json",
+    method: "POST",
+    dataType: "json",
+    xhrFields: {withCredentials: true},
+    data: { 'data':JSON.stringify(data),
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
+    success: function(data){
+      if ((data) && (data.d.RetVal === -1)) {
+        if (data.d.RetData.Tbl.Rows.length > 0) {
+          if (data.d.RetData.Tbl.Rows[0].Success == true) {
+            GetCaseDetails(caseID);
+            GetCaseHistory(caseID);
+          } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
+        }
+      }
+      else {
+        alert(data.d.RetMsg);
+      }
+    }
+  });
+}
 
 function addNewInvolvement(caseID){
   var staff, task;
@@ -92,14 +136,14 @@ function addNewActivity(caseID){
 }
 
 function GetAvailablePackage(caseId){
-  $('#packageChoice').html('');
-  var html = '<option value="0">-- Please Select --</option>';
+  $('#chargeForm #packageID').html('');
+  var html = '<option value="">-- Please Select --</option>';
   $.ajax({
     url: apiSrc+"BCMain/Ctc1.GetAvailablePackage.json",
     method: "POST",
     dataType: "json",
     xhrFields: {withCredentials: true},
-    data: { 'data':JSON.stringify({'CaseID':caseId}),
+    data: { 'data':JSON.stringify({'FLID':caseId}),
             'WebPartKey':WebPartVal,
             'ReqGUID': getGUID() },
     success: function(data){
@@ -113,7 +157,7 @@ function GetAvailablePackage(caseId){
       }else {
         alert(data.d.RetMsg);
       }
-      $('#packageChoice').html(html);
+      $('#chargeForm #packageID').html(html);
     }
   });
 }
@@ -233,13 +277,13 @@ function GetCaseInvolvement(caseId){
 
 function chargeToPackage(caseID){
   var packageID;
-  packageID = $('#reviewForm #packageChoice').val();
+  packageID = $('#chargeForm #packageID').val();
 
-  if (packageID.length==0){
+  if (packageID == ''){
     alert('Please select package to charge!');
     return false;
   }
-  var data = {'CaseID':caseID, 'packageID':packageID};
+  var data = {'FLID':caseID, 'packageID':packageID};
   if (confirm("Confirming charging to package?")){
     $.ajax({
       url: apiSrc+"BCMain/FL1.ChargeToPackageID.json",
@@ -271,7 +315,7 @@ function chargeToPackage(caseID){
 };
 
 function getStaffList(){
-  $('#information #assignedTo').html('<option value="">-- Please Select --</option>');
+  $('#involvementForm #person').html('<option value="">-- Please Select --</option>');
   var html = '';
   var data = {};
   $.ajax({
@@ -291,7 +335,7 @@ function getStaffList(){
           }
         }
       }
-      $('#information #assignedTo').append(html);
+      $('#involvementForm #person').append(html);
     }
   });
 }
