@@ -54,7 +54,7 @@ table.caseTable {
     }
 }
 
-#summary {
+#summary, #reviewInfo {
 	.cell {
 		margin-bottom: 1rem;
 	}
@@ -71,7 +71,7 @@ table.caseTable {
 }
 
 @include breakpoint(medium) {
-	#summary {
+	#summary, #reviewInfo {
 		b,span {
 			display: inline;
 		}

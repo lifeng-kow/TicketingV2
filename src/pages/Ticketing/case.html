@@ -65,7 +65,7 @@
       </div>
     </div>
   </section>
-  <section class="toggleBox" id="summary">
+  <section class="toggleBox" id="reviewInfo">
     <header class="grid-x">
       <h2 class="cell auto">Staff Review</h2>
       <button type="button" class="buttonType2 buttonChargeAdd cell medium-2 text-right"  data-open="chargeForm">Charge</button>
@@ -140,7 +140,7 @@
           <div class="text">details</div>
         </div>
         <div class="thread">
-          <div class="top"><span class="datetime">1 jan 2018<i> 13:00</i> by Security Admin</span></div> 
+          <div class="top"><span class="datetime">1 jan 2018<i> 13:00</i> by Security Admin</span></div>
           <div class="text">details</div>
         </div>
       </div>
@@ -148,7 +148,7 @@
   </section>
   <form id="involvementForm" class="reveal lightBg" data-reveal>
     <header class="grid-x grid-padding-x">
-      <h3 class="cell">New Activity</h3>
+      <h3 class="cell">New Involvement</h3>
       <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
       <span aria-hidden="true">&times;</span>
       </button>
@@ -156,7 +156,7 @@
     <div class="grid-x grid-padding-x">
       <div class="cell">
         <label>
-          Staff
+          Staff <span style="color:red">*</span>
           <select id="person" name="person">
             <option value="">-- Select Staff --</option>
             <option value="1">Admin</option>
@@ -168,7 +168,7 @@
     <div class="grid-x grid-padding-x">
       <div class="cell">
         <label>
-        Task
+        Task <span style="color:red">*</span>
         <textarea id="task" name="task" placeholder="Task"></textarea>
         </label>
       </div>
@@ -187,7 +187,7 @@
     <div class="grid-x grid-padding-x">
       <div class="cell">
         <label>
-        Description
+        Description <span style="color:red">*</span>
         <textarea id="description" name="description"></textarea>
         </label>
       </div>
@@ -238,6 +238,7 @@
           Status
           <select id="status" name="status">
             <option value="">-- Please Select --</option>
+            <option value="New">New</option>
             <option value="Open">Open</option>
             <option value="Closed">Closed</option>
           </select>

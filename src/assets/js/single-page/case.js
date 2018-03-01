@@ -2,60 +2,93 @@
 $(function(){
 
   //get caseID from URL
-  /*var urlParams = new URLSearchParams(window.location.search),
+  var urlParams = new URLSearchParams(window.location.search),
       caseID = urlParams.get('caseID');
 
-  $.when(GetAvailablePackage(caseID),getStaffList()).then(function () {
-    GetCaseDetails(caseID);
-    GetCaseHistory(caseID);
-	});
+  GetCaseDetails(caseID);
+  GetCaseHistory(caseID);
+  GetCaseInvolvement(caseID);
 
-  checkAccess();
-
-  $("#review #approval").change(function(){
-    if ($("#review #approval").val()=='Yes'){
-      $('#reviewForm #availablePackage, #reviewForm .charge').show();
-      checkChargeDisplay();
-    }else{
-      $('#reviewForm #availablePackage, #reviewForm .charge').hide();
-      checkChargeDisplay();
-    }
+  $('#activityForm #submit').click(function(){
+    addNewActivity(caseID);
   });
 
-  $("#reviewForm #charges").change(function(){
-    if ($("#reviewForm #charges").val() > 0){
-      $('#reviewForm #chargeForm').show();
-      if($('#reviewForm #packageChoice').val().length > 0){
-        $('#reviewForm .charge').show();
-      }
-      checkChargeDisplay();
-    }else{
-      $('#reviewForm #chargeForm, #reviewForm .charge').hide();
-      checkChargeDisplay();
-    }
+  $('#involvementForm #submit').click(function(){
+    addNewInvolvement(caseID);
   });
 
-  //Review submit
-  $('#reviewForm .charge').click(function(){
-    chargeToPackage(caseID);
-    checkChargeDisplay();
-  });
-
-  //Add New Log
-  $('#submit').click(function(){
-    editCase(caseID);
-    checkChargeDisplay();
-  });*/
 });
 
-function checkChargeDisplay(){
-  if ($("#reviewForm .charge").css('display') !== 'none'){
-    $("#submit").removeClass("medium-offset-5");
-    $("#submit").addClass("medium-offset-4");
-  }else{
-    $("#submit").removeClass("medium-offset-4");
-    $("#submit").addClass("medium-offset-5");
+function addNewInvolvement(caseID){
+  var staff, task;
+  staff = $('#involvementForm #person').val();
+  task = $('#involvementForm #task').val();
+
+  if (staff.length==0 || task.length==0){
+    alert('Please fill in all mandatory fields!');
+    return false;
   }
+
+  var data = {'FLID':caseID, 'RoleID':staff, 'Details':task};
+  $.ajax({
+    url: apiSrc+"BCMain/FL1.AddInvolvement.json",
+    method: "POST",
+    dataType: "json",
+    xhrFields: {withCredentials: true},
+    data: { 'data':JSON.stringify(data),
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
+    success: function(data){
+      if ((data) && (data.d.RetVal === -1)) {
+        if (data.d.RetData.Tbl.Rows.length > 0) {
+          if (data.d.RetData.Tbl.Rows[0].Success == true) {
+            GetCaseInvolvement(caseID);
+          } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
+        }
+      }
+      else {
+        alert(data.d.RetMsg);
+      }
+    }
+  });
+}
+
+function addNewActivity(caseID){
+  var Description, internal;
+  Description = $('#activityForm #description').val();
+  if ($("#activityForm #internal").is(':checked')){
+    internal = 1;
+  }else{
+    internal = 0;
+  }
+
+  if (Description.length==0){
+    alert('Please fill in description!');
+    return false;
+  }
+
+  var data = {'FLID':caseID, 'Details':Description, 'Internal':internal};
+  $.ajax({
+    url: apiSrc+"BCMain/FL1.InsertActivityLog.json",
+    method: "POST",
+    dataType: "json",
+    xhrFields: {withCredentials: true},
+    data: { 'data':JSON.stringify(data),
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
+    success: function(data){
+      if ((data) && (data.d.RetVal === -1)) {
+        if (data.d.RetData.Tbl.Rows.length > 0) {
+          if (data.d.RetData.Tbl.Rows[0].Success == true) {
+            GetCaseHistory(caseID);
+          } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
+        }
+      }
+      else {
+        alert(data.d.RetMsg);
+      }
+    }
+  });
 }
 
 function GetAvailablePackage(caseId){
@@ -92,7 +125,7 @@ function GetCaseDetails(caseId){
     method: "POST",
     dataType: "json",
     xhrFields: {withCredentials: true},
-    data: { 'data':JSON.stringify({'CaseID':caseId}),
+    data: { 'data':JSON.stringify({'FLID':caseId}),
             'WebPartKey':WebPartVal,
             'ReqGUID': getGUID() },
     success: function(data){
@@ -102,41 +135,25 @@ function GetCaseDetails(caseId){
           var createdDate = convertDateTime(caseDetails.CreatedDate, 'datetime'),
               updatedDate = convertDateTime(caseDetails.ModifiedDate, 'datetime');
           $('#summary .organisation').html(caseDetails.Organisation);
-          $('#summary .name').html(caseDetails.Name);
+          $('#summary .name').html(caseDetails.ContactPerson);
           $('#summary .email').html(caseDetails.Email);
-          $('#summary .contact').html(caseDetails.Contact);
-          $('#summary .title').html(caseDetails.Title);
-          $('#summary .category').html(caseDetails.Category);
+          $('#summary .contact').html(caseDetails.ContactNo);
+          $('#summary .subject').html(caseDetails.Subject);
           $('#summary .details').html(caseDetails.Details);
           $('#summary .createdDate').html(createdDate);
           $('#summary .updatedDate').html(updatedDate);
-          $('#information #status').val(caseDetails.Status);
-          $('#information #statusRemarks').val(caseDetails.StatusRemarks);
-          $('#information #dateFrom').val(caseDetails.DateFrom);
-          $('#information #dateTo').val(caseDetails.DateTo);
-          $('#information #assignedTo').val(caseDetails.AssignedTo);
-          $('#review #notes').val(caseDetails.Notes);
-          $('#review #category').val(caseDetails.Category);
-          $('#review #charges').val(caseDetails.ManDays);
-          $('#review #approval').val(caseDetails.Approval);
-          $('#review #approvalRemarks').val(caseDetails.ApprovalRemarks);
-          $('#reviewForm #packageChoice').val(caseDetails.BillToPackageID);
-          if (caseDetails.ManDays == 0 || caseDetails.ManDays == ''){
-            $('#reviewForm #chargeForm').hide();
-          }
-          if (caseDetails.Approval=='No' || caseDetails.Approval == ''){
-            $('#reviewForm #availablePackage, #reviewForm .charge').hide();
-          }else{
-            $('#reviewForm #availablePackage, #reviewForm .charge').show();
-          }
-          if (caseDetails.BillToPackageID!=''){
-            $('#reviewForm .charge').hide();
-            $("reviewForm .charge, #review #approval, #review #charges, #reviewForm #packageChoice").prop('disabled', true);
-          }
-          if ($('#reviewForm #packageChoice').val().length==0){
-            $('#packageChoice').append('<option value="'+caseDetails[i].BillToPackageID+'">'+caseDetails[i].PackageDetail+'</option>');
-            $('#reviewForm #packageChoice').val(caseDetails.BillToPackageID);
-          }
+          $('#reviewInfo .status').html(caseDetails.Status);
+          $('#reviewInfo .category').html(caseDetails.Category);
+          $('#reviewInfo .dateFrom').html(caseDetails.DateFrom);
+          $('#reviewInfo .dateTo').html(caseDetails.DateTo);
+          $('#reviewInfo .manHours').html(caseDetails.ChargeHours);
+          $('#reviewInfo .actualHour').html(caseDetails.ActualHours);
+          $('#reviewForm #status').val(caseDetails.Status);
+          $('#reviewForm #category').val(caseDetails.Category);
+          $('#reviewForm #scheduleDateFrom').val(caseDetails.DateFrom);
+          $('#reviewForm #scheduleDateTo').val(caseDetails.DateTo);
+          $('#reviewForm #manHours').val(caseDetails.ChargeHours);
+          $('#reviewForm #actualManHours').val(caseDetails.ActualHours);
         }
       }
       else {
@@ -147,27 +164,34 @@ function GetCaseDetails(caseId){
 };
 
 function GetCaseHistory(caseId){
-  var caseHistoryTable = $('#log').find('table'),
-      caseHistoryTbody = caseHistoryTable.find('tbody');
-  var html = ''
   $.ajax({
-    url: apiSrc+"BCMain/FL1.GetCaseHistory.json",
+    url: apiSrc+"BCMain/FL1.GetCasesActivityLog.json",
     method: "POST",
     dataType: "json",
     xhrFields: {withCredentials: true},
-    data: { 'data':JSON.stringify({'CaseID':caseId}),
+    data: { 'data':JSON.stringify({'FLID':caseId}),
             'WebPartKey':WebPartVal,
             'ReqGUID': getGUID() },
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
-          var caseHistory = data.d.RetData.Tbl.Rows;
-          for (var i=0; i<caseHistory.length; i++ ){
-            var ChangeDate = convertDateTime(caseHistory[i].ChangeDate, 'datetime');
-            html += '<tr> <td>'+ChangeDate+'</td> <td>'+caseHistory[i].ChangeBy+'</td> <td>'+caseHistory[i].ChangesMade+'</td> </tr>';
+          var caseLogs = data.d.RetData.Tbl.Rows;
+          var threadContainer = '';
+          for (var i=0; i<caseLogs.length; i++ ){
+            var date = convertDateTime(caseLogs[i].CreatedDate,'date');
+            var time = convertDateTime(caseLogs[i].CreatedDate,'time');
+            if (caseLogs[i].Internal){
+              threadContainer += '<div class="thread">'
+              threadContainer += '<div class="top"> <span class="datetime">'+date+'<i> '+time+'</i> by '+caseLogs[i].CreatedBy+'</span> <span class="tag">Internal</span></div>'
+              threadContainer += '<div class="text">'+caseLogs[i].Details+'</div> </div>';
+            }else{
+              threadContainer += '<div class="thread">'
+              threadContainer += '<div class="top"><span class="datetime">'+date+'<i> '+time+'</i> by '+caseLogs[i].CreatedBy+'</span> </div>'
+              threadContainer += '<div class="text">'+caseLogs[i].Details+'</div> </div>';
+            }
           }
+          $('#logThread .threadLog').html(threadContainer);
         }
-        caseHistoryTbody.html(html);
       }
       else {
         alert(data.d.RetMsg);
@@ -176,43 +200,28 @@ function GetCaseHistory(caseId){
   });
 };
 
-//Review Case
-function editCase(caseID){
-  var Status, StatusRemarks, DateFrom, DateTo, AssignedTo, Notes, ManDays, Approval, ApprovalRemarks, Category;
-  Status = $('#information #status').val();
-  StatusRemarks = $('#information #statusRemarks').val();
-  DateFrom = $('#information #dateFrom').val();
-  DateTo = $('#information #dateTo').val();
-  AssignedTo = $('#information #assignedTo').val();
-  Notes = $('#reviewForm #notes').val();
-  ManDays = $('#reviewForm #charges').val();
-  Approval = $('#reviewForm #approval').val();
-  ApprovalRemarks = $('#reviewForm #approvalRemarks').val();
-  Category = $('#reviewForm #category').val();
-
-  if (IsValidManDay(ManDays)==false){
-    alert('Please fill day in whole/decimal .5 only!');
-    return false;
-  }
-
-  var data = {'CaseID':caseID, 'Status':Status, 'StatusRemarks': StatusRemarks, 'DateFrom': DateFrom,'DateTo': DateTo,'AssignedTo': AssignedTo,'Notes': Notes,'ManDays': ManDays,'Approval': Approval,'ApprovalRemarks': ApprovalRemarks,'Category': Category};
+function GetCaseInvolvement(caseId){
   $.ajax({
-    url: apiSrc+"BCMain/FL1.EditCase.json",
+    url: apiSrc+"BCMain/FL1.GetCasesInvolvement.json",
     method: "POST",
     dataType: "json",
     xhrFields: {withCredentials: true},
-    data: { 'data':JSON.stringify(data),
+    data: { 'data':JSON.stringify({'FLID':caseId}),
             'WebPartKey':WebPartVal,
             'ReqGUID': getGUID() },
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
-          if (data.d.RetData.Tbl.Rows[0].Success == true) {
-            $.when(GetAvailablePackage(caseID)).then(function () {
-              GetCaseDetails(caseID);
-              GetCaseHistory(caseID);
-          	});
-          } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
+          var caseInvolvements = data.d.RetData.Tbl.Rows;
+          var involvementContainer = '';
+          for (var i=0; i<caseInvolvements.length; i++ ){
+            var date = convertDateTime(caseInvolvements[i].CreatedDate,'date');
+            var time = convertDateTime(caseInvolvements[i].CreatedDate,'time');
+            involvementContainer += '<div class="thread">'
+            involvementContainer += '<div class="top"> <span class="datetime">'+date+'<i> '+time+'</i> </span> </div>'
+            involvementContainer += '<div class="text">'+caseInvolvements[i].RolePerson+': '+caseInvolvements[i].Remarks+'</div> </div>'
+          }
+          $('#taskThread .threadTask').html(involvementContainer);
         }
       }
       else {
@@ -230,7 +239,6 @@ function chargeToPackage(caseID){
     alert('Please select package to charge!');
     return false;
   }
-  editCase(caseID);
   var data = {'CaseID':caseID, 'packageID':packageID};
   if (confirm("Confirming charging to package?")){
     $.ajax({
@@ -261,32 +269,6 @@ function chargeToPackage(caseID){
     return false;
   }
 };
-
-function checkAccess(){
-  var data = {};
-  $.ajax({
-    url: apiSrc+"BCMain/iCtc1.CheckIsAdmin.json",
-    method: "POST",
-    dataType: "json",
-    xhrFields: {withCredentials: true},
-    data: { 'data':JSON.stringify(data),
-            'WebPartKey':WebPartVal,
-            'ReqGUID': getGUID() },
-    success: function(data){
-      if ((data) && (data.d.RetVal === -1)) {
-        if (data.d.RetData.Tbl.Rows.length > 0) {
-          var access = data.d.RetData.Tbl.Rows[0];
-          if (access.CanAccess==true){
-            $("#reviewForm .charge").show();
-          }else{
-            $("#reviewForm .charge").hide();
-            $("input, textarea, select").prop('disabled', true);
-          }
-        }
-      }
-    }
-  });
-}
 
 function getStaffList(){
   $('#information #assignedTo').html('<option value="">-- Please Select --</option>');
@@ -338,33 +320,6 @@ function convertDateTime(inputFormat, type) {
   }else if (type == 'time'){
     return [pad(d.getHours()), pad(d.getMinutes()), pad(d.getSeconds())].join(':');
   }
-};
-
-//geneare drop down optioms
-function GetDropdownList(id, category) {
-  var data = {'LookupCat': category}
-  $.ajax({
-    url: apiSrc+"BCMain/iCtc1.Lookup_Get.json",
-    method: "POST",
-    dataType: "json",
-    xhrFields: {withCredentials: true},
-    data: { 'data': JSON.stringify(data),
-            'WebPartKey':WebPartVal,
-            'ReqGUID': getGUID() },
-    success: function(data){
-      if ((data) && (data.d.RetVal === -1)) {
-        if (data.d.RetData.Tbl.Rows.length > 0) {
-          var lookup = data.d.RetData.Tbl.Rows;
-          for (var i=0; i<lookup.length; i++ ){
-            $(id).append('<option value="'+lookup[i].LookupKey+'">'+lookup[i].Description+'</option>');
-          }
-        }
-      }
-      else {
-        alert(data.d.RetMsg);
-      }
-    }
-  });
 };
 
 function getGUID() {
