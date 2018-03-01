@@ -45,29 +45,8 @@ $(function(){
     }
   });
 
-  var getProductList =
-  $.ajax({
-    url: apiSrc+"BCMain/iCtc1.getProductList.json",
-    method: "POST",
-    dataType: "json",
-    xhrFields: {withCredentials: true},
-    data: { 'data':JSON.stringify({}),
-            'WebPartKey':WebPartVal,
-            'ReqGUID': getGUID() },
-    success: function(data){
-      if ((data) && (data.d.RetVal === -1)) {
-        if (data.d.RetData.Tbl.Rows.length > 0) {
-          $('#caseAddForm #product').append('<option value="">-- Please Select --</option>');
-          var productList = data.d.RetData.Tbl.Rows;
-          for (var i=0; i<productList.length; i++ ){
-            $('#caseAddForm #product').append('<option value="'+productList[i].Product+'">'+productList[i].Product+'</option>');
-          }
-        }
-      }
-    }
-  });
-
-  /*var checkAccess =
+  /*
+  var checkAccess =
     $.ajax({
       url: apiSrc+"BCMain/iCtc1.CheckIsAdmin.json",
       method: "POST",
@@ -89,8 +68,12 @@ $(function(){
   getProductOwn();
   $.when(getOrgnaisation).then(function( x ) {
     getCasesList();
+    getOrgProductList($('#caseAddForm #organisation').val());
   });
 
+  $("#caseAddForm #organisation").change(function(){
+    getOrgProductList($('#caseAddForm #organisation').val());
+  });
   //Add New Case
   $('#caseAddForm #submit').click(function(){
     createNewCase();
@@ -272,6 +255,31 @@ function getProductOwn(){
     }
   });
 };
+
+function getOrgProductList(Organization){
+  $('#caseAddForm #product').html('');
+  $('#caseAddForm #product').append('<option value="">-- Please Select --</option>');
+  var data = {'Organization':Organization};
+  $.ajax({
+    url: apiSrc+"BCMain/iCtc1.getOrgProductList.json",
+    method: "POST",
+    dataType: "json",
+    xhrFields: {withCredentials: true},
+    data: { 'data':JSON.stringify(data),
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
+    success: function(data){
+      if ((data) && (data.d.RetVal === -1)) {
+        if (data.d.RetData.Tbl.Rows.length > 0) {
+          var productList = data.d.RetData.Tbl.Rows;
+          for (var i=0; i<productList.length; i++ ){
+            $('#caseAddForm #product').append('<option value="'+productList[i].Product+'">'+productList[i].Product+'</option>');
+          }
+        }
+      }
+    }
+  });
+}
 
 function addNewPackage(){
   var RoleID, PackageType, Product, StartDate, ExpiryDate, AssurancePlus, NoAssPlus, Remarks;

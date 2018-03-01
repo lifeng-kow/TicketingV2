@@ -14,12 +14,38 @@ $(function(){
   //var urlParams = new URLSearchParams(window.location.search),
     //  packageID = urlParams.get('packageID');
 
-  //getOrgnaisationList();
-  //getProductList();
-  getPackageList();
+  var getOrgnaisation =
+  $.ajax({
+    url: apiSrc+"BCMain/iCtc1.getOrgnaisationList.json",
+    method: "POST",
+    dataType: "json",
+    xhrFields: {withCredentials: true},
+    data: { 'data':JSON.stringify({}),
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
+    success: function(data){
+      if ((data) && (data.d.RetVal === -1)) {
+        if (data.d.RetData.Tbl.Rows.length == 1) {
+          var org = data.d.RetData.Tbl.Rows[0];
+          $('#packageFilter #organisation, #packageAddForm #organisation').append('<option value="'+org.DefaultRoleID+'" selected>'+org.DisplayName+'</option>');
+        }else if (data.d.RetData.Tbl.Rows.length > 0) {
+          $('#packageFilter #organisation, #packageAddForm #organisation').append('<option value="">-- Please Select --</option>');
+          var orgList = data.d.RetData.Tbl.Rows;
+          for (var i=0; i<orgList.length; i++ ){
+            $('#packageFilter #organisation, #packageAddForm #organisation').append('<option value="'+orgList[i].DefaultRoleID+'">'+orgList[i].DisplayName+'</option>');
+          }
+        }
+      }
+    }
+  });
+
+  $.when(getOrgnaisation).then(function( x ) {
+    getPackageList();
+    getOrgProductList($('#packageFilter #organisation').val());
+  });
 
   $("#packageFilter #organisation").change(function(){
-    getProductList();
+    getOrgProductList($('#packageFilter #organisation').val());
   });
 
   //filter
@@ -122,40 +148,12 @@ function getPackageList(){
   });
 };
 
-function getOrgnaisationList(){
-  var data = {};
-  $.ajax({
-    url: apiSrc+"BCMain/iCtc1.getOrgnaisationList.json",
-    method: "POST",
-    dataType: "json",
-    xhrFields: {withCredentials: true},
-    data: { 'data':JSON.stringify(data),
-            'WebPartKey':WebPartVal,
-            'ReqGUID': getGUID() },
-    success: function(data){
-      if ((data) && (data.d.RetVal === -1)) {
-        if (data.d.RetData.Tbl.Rows.length == 1) {
-          var org = data.d.RetData.Tbl.Rows[0];
-          $('#packageAddForm #organisation, #packageFilter #organisation').append('<option value="'+org.DefaultRoleID+'" selected>'+org.DisplayName+'</option>');
-        }else if (data.d.RetData.Tbl.Rows.length > 0) {
-          $('#packageAddForm #organisation, #packageFilter #organisation').append('<option value="">-- Please Select --</option>');
-          var orgList = data.d.RetData.Tbl.Rows;
-          for (var i=0; i<orgList.length; i++ ){
-            $('#packageAddForm #organisation, #packageFilter #organisation').append('<option value="'+orgList[i].DefaultRoleID+'">'+orgList[i].DisplayName+'</option>');
-          }
-        }
-      }
-    }
-  });
-}
-
-function getProductList(){
-  var Organization;
-  Organization = $('#packageFilter #organisation').val();
-  $('#packageFilter #product').html('<option value="">-- Please Select --</option>');
+function getOrgProductList(Organization){
+  $('#packageFilter #product').html('');
+  $('#packageFilter #product').append('<option value="">-- Please Select --</option>');
   var data = {'Organization':Organization};
   $.ajax({
-    url: apiSrc+"BCMain/iCtc1.getProductList.json",
+    url: apiSrc+"BCMain/iCtc1.getOrgProductList.json",
     method: "POST",
     dataType: "json",
     xhrFields: {withCredentials: true},
@@ -165,9 +163,9 @@ function getProductList(){
     success: function(data){
       if ((data) && (data.d.RetVal === -1)) {
         if (data.d.RetData.Tbl.Rows.length > 0) {
-          var packageList = data.d.RetData.Tbl.Rows;
-          for (var i=0; i<packageList.length; i++ ){
-            $('#packageFilter #product').append('<option value="'+packageList[i].Product+'">'+packageList[i].Product+'</option>');
+          var productList = data.d.RetData.Tbl.Rows;
+          for (var i=0; i<productList.length; i++ ){
+            $('#packageFilter #product').append('<option value="'+productList[i].Product+'">'+productList[i].Product+'</option>');
           }
         }
       }
@@ -193,33 +191,6 @@ function convertDateTime(inputFormat, type) {
   }else if (type == 'time'){
     return [pad(d.getHours()), pad(d.getMinutes()), pad(d.getSeconds())].join(':');
   }
-};
-
-//geneare drop down optioms
-function GetDropdownList(id, category) {
-  var data = {'LookupCat': category}
-  $.ajax({
-    url: apiSrc+"BCMain/iCtc1.Lookup_Get.json",
-    method: "POST",
-    dataType: "json",
-    xhrFields: {withCredentials: true},
-    data: { 'data': JSON.stringify(data),
-            'WebPartKey':WebPartVal,
-            'ReqGUID': getGUID() },
-    success: function(data){
-      if ((data) && (data.d.RetVal === -1)) {
-        if (data.d.RetData.Tbl.Rows.length > 0) {
-          var lookup = data.d.RetData.Tbl.Rows;
-          for (var i=0; i<lookup.length; i++ ){
-            $(id).append('<option value="'+lookup[i].LookupKey+'">'+lookup[i].Description+'</option>');
-          }
-        }
-      }
-      else {
-        alert(data.d.RetMsg);
-      }
-    }
-  });
 };
 
 function getGUID() {
