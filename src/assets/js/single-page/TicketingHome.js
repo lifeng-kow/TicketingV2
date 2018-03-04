@@ -197,18 +197,18 @@ function getUsersList(){
           var users = data.d.RetData.Tbl.Rows;
           var htmlString = '';
           for (var i=0; i<users.length; i++ ){
-            htmlString += '<tr id="'+ users[i].FLID +'">';
+            htmlString += '<tr id="'+ users[i].PersonID +'">';
             htmlString += '<td>'+users[i].DisplayName+'</td>';
             htmlString += '<td>'+users[i].EntityKey+'</td>';
-            htmlString += '<td>'+users[i].Tel1+'</td>';
+            htmlString += '<td>'+users[i].ContactNo+'</td>';
             htmlString += '<td>'+users[i].Email1+'</td>';
             htmlString += '<td>'+users[i].FullAddress+'</td> </tr>';
           }
           userTbody.html(htmlString);
           $('.userTable tbody tr').click(function(){
             var personID = $(this).attr('id'),
-                profileUrl = './case.html?personID=' + personID
-            window.location.href = caseUrl;
+                profileUrl = './profile.html?personID=' + personID
+            window.location.href = profileUrl;
           });
         }
       }

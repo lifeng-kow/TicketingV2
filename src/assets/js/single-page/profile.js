@@ -1,12 +1,17 @@
-var appCookie;
+var appCookie, personID;
 
 $(function(){
 
+  var urlParams = new URLSearchParams(window.location.search);
+
+  personID = urlParams.get('personID');
   appCookie = Cookies.getJSON('appCookie');
-  if (appCookie.personID) {
-     GetBasicInformation(appCookie.personID);
+
+  if (!personID){
+    personID=appCookie.personID;
   }
 
+  GetBasicInformation(personID);
   $('#passwordForm,#changeMyPwd').keyup(function(e){
     if(e.keyCode == 13){
       var NewUserName, Password;
@@ -158,8 +163,8 @@ function GetBasicInformation(personID) {
       if ((data) && (data.d.RetData.Tbl.Rows.length > 0)) {
         var personalInfo = data.d.RetData.Tbl.Rows[0];
         if (personalInfo.EntityType == 'O'){
-          getOrgnisationInfo(appCookie.personID);
-          getPointofContact(appCookie.personID);
+          getOrgnisationInfo(personID);
+          getPointofContact(personID);
         }else{
           showIndProfile();
           $('.indName').html(personalInfo.DisplayName);
@@ -368,8 +373,7 @@ function showOrgProfile(){
   $('#profileData').append(orgProfile);
   $('#basicForm').hide();
   $('#basicSubmit').click(function(){
-    console.log(appCookie.personID);
-    updateOrgBasic(appCookie.personID);
+    updateOrgBasic(personID);
   });
 }
 
@@ -400,7 +404,7 @@ function showIndProfile(){
   $('#basicForm').hide();
   $('#contactPointData').hide();
   $('#basicSubmit').click(function(){
-    updateIndBasic(appCookie.personID);
+    updateIndBasic(personID);
   });
 }
 
@@ -437,7 +441,7 @@ function showOrgContact(){
   $('#contactPointData').append(contactPoint);
   $('#contactPointForm').hide();
   $('#pocSubmit').click(function(){
-    updateContactPoint(appCookie.personID);
+    updateContactPoint(personID);
   });
 }
 
