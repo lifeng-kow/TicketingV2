@@ -67,6 +67,7 @@ $(function(){
   getProductOwn();
   $.when(getOrgnaisation).then(function( x ) {
     getCasesList();
+    getUsersList();
     getOrgProductList($('#caseAddForm #organisation').val());
   });
 
@@ -79,6 +80,9 @@ $(function(){
   });
   $('#caseFilter .tabBoxButtonSubmit').click(function(){
     getCasesList();
+  });
+  $('#userFilter .tabBoxButtonSubmit').click(function(){
+    getUsersList();
   });
   $('#packageAddForm #submit').click(function(){
     addNewPackage();
@@ -158,6 +162,52 @@ function getCasesList(){
           $('.caseTable tbody tr').click(function(){
             var caseId = $(this).attr('id'),
                 caseUrl = './case.html?caseID=' + caseId
+            window.location.href = caseUrl;
+          });
+        }
+      }
+    }
+  });
+};
+
+function getUsersList(){
+  var userContainerTable = $('#userContainer').find('table'),
+      userThead = userContainerTable.find('thead'),
+      userTbody = userContainerTable.find('tbody');
+
+  var name, entityKey, contactNo, email;
+  name = $('#userFilter #name').val();
+  entityKey = $('#userFilter #entityKey').val();
+  contactNo = $('#userFilter #contactNo').val();
+  email = $('#userFilter #email').val();
+
+  var data = {'name':name, 'entityKey':entityKey, 'contactNo':contactNo, 'email': email};
+  userTbody.html('');
+  $.ajax({
+    url: apiSrc+"BCMain/Ctc1.GetUsersList.json",
+    method: "POST",
+    dataType: "json",
+    xhrFields: {withCredentials: true},
+    data: { 'data':JSON.stringify(data),
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
+    success: function(data){
+      if ((data) && (data.d.RetVal === -1)) {
+        if (data.d.RetData.Tbl.Rows.length > 0) {
+          var users = data.d.RetData.Tbl.Rows;
+          var htmlString = '';
+          for (var i=0; i<users.length; i++ ){
+            htmlString += '<tr id="'+ users[i].FLID +'">';
+            htmlString += '<td>'+users[i].displayname+'</td>';
+            htmlString += '<td>'+users[i].entityKey+'</td>';
+            htmlString += '<td>'+users[i].contactNo+'</td>';
+            htmlString += '<td>'+users[i].email1+'</td>';
+            htmlString += '<td>'+users[i].fullAddress+'</td> </tr>';
+          }
+          userTbody.html(htmlString);
+          $('.userTable tbody tr').click(function(){
+            var personID = $(this).attr('id'),
+                profileUrl = './case.html?personID=' + personID
             window.location.href = caseUrl;
           });
         }
@@ -381,6 +431,7 @@ function addNewUser(){
         if (data.d.RetData.Tbl.Rows.length > 0) {
           if (data.d.RetData.Tbl.Rows[0].Success == true) {
             alert('New user added successfully!');
+            getUsersList();
           } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
         }
       }
