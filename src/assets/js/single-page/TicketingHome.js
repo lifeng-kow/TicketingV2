@@ -198,11 +198,11 @@ function getUsersList(){
           var htmlString = '';
           for (var i=0; i<users.length; i++ ){
             htmlString += '<tr id="'+ users[i].FLID +'">';
-            htmlString += '<td>'+users[i].displayname+'</td>';
-            htmlString += '<td>'+users[i].entityKey+'</td>';
-            htmlString += '<td>'+users[i].contactNo+'</td>';
-            htmlString += '<td>'+users[i].email1+'</td>';
-            htmlString += '<td>'+users[i].fullAddress+'</td> </tr>';
+            htmlString += '<td>'+users[i].DisplayName+'</td>';
+            htmlString += '<td>'+users[i].EntityKey+'</td>';
+            htmlString += '<td>'+users[i].Tel1+'</td>';
+            htmlString += '<td>'+users[i].Email1+'</td>';
+            htmlString += '<td>'+users[i].FullAddress+'</td> </tr>';
           }
           userTbody.html(htmlString);
           $('.userTable tbody tr').click(function(){
