@@ -44,6 +44,28 @@ $(function(){
     }
   });
 
+  var getRoleTags =
+  $.ajax({
+    url: apiSrc+"BCMain/iCtc1.getRoleTags.json",
+    method: "POST",
+    dataType: "json",
+    xhrFields: {withCredentials: true},
+    data: { 'data':JSON.stringify({}),
+            'WebPartKey':WebPartVal,
+            'ReqGUID': getGUID() },
+    success: function(data){
+      if ((data) && (data.d.RetVal === -1)) {
+        if (data.d.RetData.Tbl.Rows.length > 0) {
+          $('#newUserForm #role').append('<option value="">-- Please Select --</option>');
+          var roleTagList = data.d.RetData.Tbl.Rows;
+          for (var i=0; i<roleTagList.length; i++ ){
+            $('#newUserForm #role').append('<option value="'+roleTagList[i].TagName+'">'+roleTagList[i].RoleName+'</option>');
+          }
+        }
+      }
+    }
+  });
+
   /*
   var checkAccess =
     $.ajax({
