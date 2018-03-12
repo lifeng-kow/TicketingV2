@@ -3,7 +3,7 @@ var access=false;
 $(function(){
 
   $("#newUserForm #role").change(function(){
-    if ($("#newUserForm #role").val()=='Customer'){
+    if ($("#newUserForm #role option:selected").text()=='Clients'){
       $("#newUserForm #contactPoint").show();
     }else{
       $("#newUserForm #contactPoint").hide();
