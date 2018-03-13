@@ -93,7 +93,7 @@ function addNewPackage(){
   }else{
     AssurancePlus = 0;
   }
-  NoAssPlus = $('#packageAddForm #assurancePlusNo').val();
+  NoAssPlus = $('#packageAddForm #assurancePlusNo').val() * 8;
   Remarks = $('#packageAddForm #remarks').val();
 
   if (RoleID.length==0 || PackageType.length==0 || Product.length==0 || StartDate.length==0 || ExpiryDate.length==0){
@@ -152,7 +152,7 @@ function getPackageList(){
             var expiryDate = convertDateTime(packages[i].ExpiryDate,'date');
             var asp = packages[i].AssurancePlus;
             var assuranceYesNo;
-            if (asp=1){
+            if (asp){
               assuranceYesNo = 'Yes';
             }else{
               assuranceYesNo = 'No';
