@@ -1,4 +1,5 @@
 var access=false;
+var RoleName = '';
 
 $(function(){
 
@@ -66,10 +67,9 @@ $(function(){
     }
   });
 
-  /*
-  var checkAccess =
+  var checkRoleAccess =
     $.ajax({
-      url: apiSrc+"BCMain/iCtc1.CheckIsAdmin.json",
+      url: apiSrc+"BCMain/iCtc1.CheckRoleAccess.json",
       method: "POST",
       dataType: "json",
       xhrFields: {withCredentials: true},
@@ -79,17 +79,32 @@ $(function(){
       success: function(data){
         if ((data) && (data.d.RetVal === -1)) {
           if (data.d.RetData.Tbl.Rows.length > 0) {
-            access = data.d.RetData.Tbl.Rows[0].CanAccess;
+            RoleName = data.d.RetData.Tbl.Rows[0].RoleName;
           }
         }
       }
     });
-    */
 
-  getProductOwn();
-  $.when(getOrgnaisation).then(function( x ) {
-    getCasesList();
-    getUsersList();
+  $.when(checkRoleAccess, getOrgnaisation).then(function( x ) {
+    if (RoleName=='Admin'){
+      $('.adminView').show();
+      getUsersList();
+    }else if (RoleName=='Clients'){
+      $('.clientView').show();
+      getProductOwn();
+      getCasesList();
+    }else if (RoleName=='Support Developer'){
+      $('.developerView').show();
+      getCasesList();
+    }else if (RoleName=='Support Team Lead'){
+      $('.teamLeadView').show();
+      getCasesList();
+    }else if (RoleName=='Sales'){
+      $('.salesView').show();
+      getCasesList();
+    }else{
+      $('.clientView, .teamLeadView, .developerView, .salesView, .adminView').show();
+    }
     getOrgProductList($('#caseAddForm #organisation').val());
   });
 

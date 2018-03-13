@@ -68,8 +68,8 @@
   <section class="toggleBox" id="reviewInfo">
     <header class="grid-x">
       <h2 class="cell auto">Staff Review</h2>
-      <button type="button" class="buttonType2 buttonChargeAdd cell medium-2 text-right"  data-open="chargeForm">Charge</button>
-      <button type="button" class="buttonType2 buttonReviewAdd cell medium-2 text-right"  data-open="reviewForm">Review</button>
+      <button type="button" style="display:none" class="buttonType2 buttonChargeAdd cell medium-2 text-right teamLeadControl"  data-open="chargeForm">Charge</button>
+      <button type="button" style="display:none" class="buttonType2 buttonReviewAdd cell medium-2 text-right teamLeadControl"  data-open="reviewForm">Review</button>
     </header>
     <div class="grid-container toggleContent">
       <div class="grid-x grid-margin-x">
@@ -113,7 +113,7 @@
   <section id="involvement">
     <header class="grid-x">
       <h2 class="cell auto">Involvement</h2>
-      <button type="button" class="buttonType2 buttonType2Add cell medium-3 text-right"  data-open="involvementForm">Add Involvement</button>
+      <button type="button" style="display:none" class="buttonType2 buttonType2Add cell medium-3 text-right teamLeadControl"  data-open="involvementForm">Add Involvement</button>
     </header>
     <div class="threadContainer" id="taskThread">
       <div class="scrollContainer scrollY threadTask">
@@ -192,7 +192,7 @@
         </label>
       </div>
     </div>
-    <div class="grid-x grid-padding-x internalCheckBox">
+    <div style="display:none" class="grid-x grid-padding-x internalCheckBox supportControl">
       <div class="cell">
         <label class="callout calloutInline calloutNeutral">
         <input type="checkbox" id="internal" name="internal" />
@@ -238,10 +238,10 @@
           Status
           <select id="status" name="status">
             <option value="">-- Please Select --</option>
-            <option value="New">New - Open</option>
-            <option value="New">Reviewed & Processing - Open</option>
-            <option value="New">Reviewed & Pending Approval - Open</option>
-            <option value="New">Processing - Open</option>
+            <option value="New - Open">New - Open</option>
+            <option value="Reviewed & Processing - Open">Reviewed & Processing - Open</option>
+            <option value="Reviewed & Pending Approval - Open">Reviewed & Pending Approval - Open</option>
+            <option value="Processing - Open">Processing - Open</option>
             <option value="Rejected - Closed">Rejected - Closed</option>
             <option value="Completed - Closed">Completed - Closed</option>
           </select>

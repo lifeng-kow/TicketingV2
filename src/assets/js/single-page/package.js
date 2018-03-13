@@ -39,6 +39,29 @@ $(function(){
     }
   });
 
+  var checkRoleAccess =
+    $.ajax({
+      url: apiSrc+"BCMain/iCtc1.CheckRoleAccess.json",
+      method: "POST",
+      dataType: "json",
+      xhrFields: {withCredentials: true},
+      data: { 'data':JSON.stringify({}),
+              'WebPartKey':WebPartVal,
+              'ReqGUID': getGUID() },
+      success: function(data){
+        if ((data) && (data.d.RetVal === -1)) {
+          if (data.d.RetData.Tbl.Rows.length > 0) {
+            var RoleName = data.d.RetData.Tbl.Rows[0].RoleName;
+            if (RoleName=='Admin'){
+              $('.adminControl').show();
+            }else{
+              $('.adminControl').hide();
+            }
+          }
+        }
+      }
+    });
+
   $.when(getOrgnaisation).then(function( x ) {
     getPackageList();
     getOrgProductList($('#packageFilter #organisation').val());

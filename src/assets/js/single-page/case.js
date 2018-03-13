@@ -1,3 +1,4 @@
+var RoleName = '';
 
 $(function(){
 
@@ -5,11 +6,44 @@ $(function(){
   var urlParams = new URLSearchParams(window.location.search),
       caseID = urlParams.get('caseID');
 
-  getStaffList();
-  GetAvailablePackage(caseID);
-  GetCaseDetails(caseID);
-  GetCaseHistory(caseID);
-  GetCaseInvolvement(caseID);
+  var checkRoleAccess =
+    $.ajax({
+      url: apiSrc+"BCMain/iCtc1.CheckRoleAccess.json",
+      method: "POST",
+      dataType: "json",
+      xhrFields: {withCredentials: true},
+      data: { 'data':JSON.stringify({}),
+              'WebPartKey':WebPartVal,
+              'ReqGUID': getGUID() },
+      success: function(data){
+        if ((data) && (data.d.RetVal === -1)) {
+          if (data.d.RetData.Tbl.Rows.length > 0) {
+            RoleName = data.d.RetData.Tbl.Rows[0].RoleName;
+          }
+        }
+      }
+    });
+
+  $.when(checkRoleAccess).then(function( x ) {
+    GetCaseDetails(caseID);
+    GetCaseHistory(caseID);
+    GetCaseInvolvement(caseID);
+    if (RoleName=='Admin'){
+
+    }else if (RoleName=='Clients'){
+
+    }else if (RoleName=='Support Developer'){
+
+    }else if (RoleName=='Support Team Lead'){
+      getStaffList();
+      GetAvailablePackage(caseID);
+      $('.teamLeadControl, .supportControl').show();
+    }else if (RoleName=='Sales'){
+
+    }else{
+
+    }
+  });
 
   $('#activityForm #submit').click(function(){
     addNewActivity(caseID);

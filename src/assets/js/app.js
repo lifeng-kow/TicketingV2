@@ -51,10 +51,32 @@ $(function(){
     window.location.href = appRootPath +'login.html';
   }
 
-  //checkAccess();
   if(appCookie.loginID){
     GetBasicInformation(appCookie.personID);
   }
+
+  var checkRoleAccess =
+    $.ajax({
+      url: apiSrc+"BCMain/iCtc1.CheckRoleAccess.json",
+      method: "POST",
+      dataType: "json",
+      xhrFields: {withCredentials: true},
+      data: { 'data':JSON.stringify({}),
+              'WebPartKey':WebPartVal,
+              'ReqGUID': getGUID() },
+      success: function(data){
+        if ((data) && (data.d.RetVal === -1)) {
+          if (data.d.RetData.Tbl.Rows.length > 0) {
+            var RoleName = data.d.RetData.Tbl.Rows[0].RoleName;
+            if (RoleName=='Clients'){
+              $('#caseFilter .orgCell, #mainMenu .packageMenu').hide();
+            }else{
+              $('#caseFilter .orgCell').show();
+            }
+          }
+        }
+      }
+    });
 
   $('#mainMenuLeft #logOut, #logOut').click(function() {
     $.ajax({
@@ -180,34 +202,6 @@ $(function(){
     return false;
   });
 });//onready
-
-function checkAccess(){
-  var data = {};
-  $.ajax({
-    url: apiSrc+"BCMain/iCtc1.CheckIsAdmin.json",
-    method: "POST",
-    dataType: "json",
-    xhrFields: {withCredentials: true},
-    data: { 'data':JSON.stringify(data),
-            'WebPartKey':WebPartVal,
-            'ReqGUID': getGUID() },
-    success: function(data){
-      if ((data) && (data.d.RetVal === -1)) {
-        if (data.d.RetData.Tbl.Rows.length > 0) {
-          var access = data.d.RetData.Tbl.Rows[0];
-          if (access.CanAccess==true){
-            $('#packages').hide();
-            $('#mainMenuLeft #navPackages, #navPackages').show();
-            $('#mainMenuLeft #navSettings, #navSettings').show();
-          }else{
-            $('#caseFilter .orgCell').hide();
-            $('#caseFilter #statusMyCase, #caseFilter .mycase').hide();
-          }
-        }
-      }
-    }
-  });
-}
 
 function GetBasicInformation(personID) {
   var data = {'PersonID': personID};
