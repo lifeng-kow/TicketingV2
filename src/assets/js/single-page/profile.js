@@ -311,12 +311,29 @@ function updateContactPoint(PersonID){
   poc2Designation = $('#poc2Designation').val();
   poc2Department = $('#poc2Department').val();
 
-  if (IsValidContact(poc1Contact)==false || IsValidContact(poc2Contact)==false){
-    alert('Invalid contact!');
-    return false;
-  }if (IsValidEmail(poc1Email)==false || IsValidEmail(poc2Email)==false){
-    alert('Invalid email!');
-    return false;
+  if (poc1Contact!=''){
+    if (!IsValidContact(poc1Contact)){
+      alert('Invalid contact!');
+      return false;
+    }
+  }
+  if (poc2Contact!=''){
+    if (!IsValidContact(poc2Contact)){
+      alert('Invalid contact!');
+      return false;
+    }
+  }
+  if (poc1Email!=''){
+    if (!IsValidEmail(poc1Email)){
+      alert('Invalid email!');
+      return false;
+    }
+  }
+  if (poc2Email!=''){
+    if (!IsValidEmail(poc2Email)){
+      alert('Invalid email!');
+      return false;
+    }
   }
 
   var data = { "PID": PersonID, "poc1Name": poc1Name, "poc1Contact": poc1Contact, "poc1Email": poc1Email, "poc1Designation": poc1Designation, "poc1Department": poc1Department, "poc2Name": poc2Name, "poc2Contact": poc2Contact, "poc2Email": poc2Email, "poc2Designation": poc2Designation, "poc2Department": poc2Department };
