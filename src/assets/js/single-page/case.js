@@ -121,6 +121,7 @@ function addNewInvolvement(caseID){
         if (data.d.RetData.Tbl.Rows.length > 0) {
           if (data.d.RetData.Tbl.Rows[0].Success == true) {
             GetCaseInvolvement(caseID);
+            GetCaseHistory(caseID);
           } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
         }
       }
