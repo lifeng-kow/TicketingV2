@@ -212,10 +212,19 @@ function updateIndBasic(PersonID){
   unit = $('#unit').val();
   building = $('#building').val();
 
-  if (IsValidContact(tel1)==false || IsValidContact(mobile)==false){
-    alert('Invalid contact!');
-    return false;
-  }if (IsValidEmail(email)==false){
+  if (tel1!=''){
+    if (IsValidContact(tel1)==false){
+      alert('Invalid contact!');
+      return false;
+    }
+  }
+  if (mobile!=''){
+    if (IsValidContact(mobile)==false){
+      alert('Invalid contact!');
+      return false;
+    }
+  }
+  if (IsValidEmail(email)==false){
     alert('Invalid email!');
     return false;
   }
