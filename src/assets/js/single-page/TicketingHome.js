@@ -143,8 +143,8 @@ function getCasesList(){
   DateTo = $('#caseFilter #dateCreatedTo').val();
 
   var data = {'Organization':Organization, 'Status':Status, 'DateFrom':DateFrom, 'DateTo': DateTo};
-  if (access==false){
-    //caseThead.html('<tr><th colspan="2">Subject</th><th>Type</th><th>Created Date</th><th>Status</th></tr>');
+  if (RoleName=='Clients'){
+    caseThead.html('<tr><th colspan="2">Subject</th><th>Type</th><th>Created Date</th><th>Status</th></tr>');
   }
   caseTbody.html('');
   $.ajax({
@@ -164,36 +164,25 @@ function getCasesList(){
             var createdDate = convertDateTime(cases[i].CreatedDate,'date');
             htmlString += '<tr id="'+ cases[i].FLID +'">';
             //color code
-            /*if (cases[i].Status=='Open'){
+            var status = cases[i].Status;
+            var re = /\bOpen\b/;
+            if (re.test(status)==true){
               htmlString += '<td class="colorCodeActive"></td>';
             }else{
               htmlString += '<td class="colorCodeNonActive"></td>';
-            }*/
-            htmlString += '<td class="colorCodeActive"></td>';
-            htmlString += '<td>'+cases[i].Subject+'</td>';
-            htmlString += '<td>'+cases[i].Category+'</td>';
-            htmlString += '<td>'+cases[i].DisplayName+'</td>';
-            htmlString += '<td>'+createdDate+'</td>';
-            htmlString += '<td><span class="statusNew">'+cases[i].Status+'</span></td> </tr>';
-            /*if (access==false){
-              htmlString += '<tr id="'+ cases[i].CaseID +'">';
-              //color code
-              if (cases[i].Status=='Open'){
-                htmlString += '<td class="colorCodeActive"></td>';
-              }else{
-                htmlString += '<td class="colorCodeNonActive"></td>';
-              }
-              htmlString += '<td>'+cases[i].Title+'</td> <td>'+cases[i].Category+'</td> <td>'+createdDate+'</td> <td><span class="statusNew">'+cases[i].Status+'</span></td> </tr>';
+            }
+            if (RoleName=='Clients'){
+              htmlString += '<td>'+cases[i].Subject+'</td>';
+              htmlString += '<td>'+cases[i].Category+'</td>';
+              htmlString += '<td>'+createdDate+'</td>';
+              htmlString += '<td><span class="statusNew">'+cases[i].Status+'</span></td> </tr>';
             }else{
-              htmlString += '<tr id="'+ cases[i].CaseID +'">';
-              //color code
-              if (cases[i].Status=='Open'){
-                htmlString += '<td class="colorCodeActive"></td>';
-              }else{
-                htmlString += '<td class="colorCodeNonActive"></td>';
-              }
-              htmlString += '<td>'+cases[i].Title+'</td> <td>'+cases[i].Category+'</td> <td>'+cases[i].DisplayName+'</td> <td>'+createdDate+'</td> <td><span class="statusNew">'+cases[i].Status+'</span></td> </tr>';
-            }*/
+              htmlString += '<td>'+cases[i].Subject+'</td>';
+              htmlString += '<td>'+cases[i].Category+'</td>';
+              htmlString += '<td>'+cases[i].DisplayName+'</td>';
+              htmlString += '<td>'+createdDate+'</td>';
+              htmlString += '<td><span class="statusNew">'+cases[i].Status+'</span></td> </tr>';
+            }
           }
           caseTbody.html(htmlString);
           $('.caseTable tbody tr').click(function(){
